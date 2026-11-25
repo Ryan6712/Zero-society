@@ -1,13 +1,13 @@
-[gd_scene format=3 uid="uid://bbjfdcjen4o4s"]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" uid="uid://bjqwtowir7mvw" path="res://view/camera_controller.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://bg1apaqmh4xm" path="res://assets/Animals/Chicken/Chicken.png" id="2_g3l4x"]
+[ext_resource type="Script" path="res://view/camera_controller.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sunnyside_world/Elements/Animals/spr_deco_chicken_01_strip4.png" id="2"]
 
-[node name="Main" type="Node2D" unique_id=732049114]
+[node name="Main" type="Node2D"]
 script = ExtResource("1")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1749248134]
+[node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Chicken" type="Sprite2D" parent="." unique_id=2040192088]
-position = Vector2(-319, -52)
-texture = ExtResource("2_g3l4x")
+[node name="Placeholder" type="Sprite2D" parent="."]
+texture = ExtResource("2")
+hframes = 4
