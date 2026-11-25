@@ -10,6 +10,7 @@ build/
 # Logs & local data
 user://
 *.log
+*.jsonl
 
 # Environment
 .env

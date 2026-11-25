@@ -48,6 +48,7 @@ godot --headless -s addons/gut/gut_cmdln.gd
  
 # satu file tes (cek dokumentasi GUT jika opsi berubah)
 godot --headless -s addons/gut/gut_cmdln.gd -gtest=res://tests/test_needs_system.gd
+```
  
  
  
