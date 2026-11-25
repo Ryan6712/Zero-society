@@ -308,13 +308,13 @@ Ringkasan:
 **Alur kerja:** SZ-401 -> SZ-402 -> SZ-403, SZ-404, SZ-405 paralel -> SZ-406 -> SZ-407 -> SZ-408 -> SZ-409 -> SZ-410 -> SZ-411.
  
 **Definisi selesai sprint:**
-- [ ] Checklist playtest manual (di bawah) lulus.
-- [ ] SZ-407: hash state akhir identik dengan dan tanpa view untuk seed yang sama.
-- [ ] Inspector menampilkan alasan keputusan terakhir yang sama dengan isi event log.
-- [ ] Perf smoke: waktu `step()` untuk jumlah agent target dicatat sebagai baseline. Tetapkan ambang awal berdasarkan pengukuran (mis. headless 10.000 tick untuk 20 agent selesai dalam batas yang disepakati), lalu jadikan regresi perf sebagai peringatan.
-- [ ] Semua checklist penerimaan di dokumen struktur centang.
-- [ ] README memungkinkan orang baru menjalankan demo dalam kurang dari 15 menit.
-- [ ] Tag `v0.1.0` dan catatan rilis memuat: fitur, batasan yang diketahui, cara reproduksi eksperimen (seed).
+- [x] Checklist playtest manual (di bawah) lulus.
+- [x] SZ-407: hash state akhir identik dengan dan tanpa view untuk seed yang sama.
+- [x] Inspector menampilkan alasan keputusan terakhir yang sama dengan isi event log.
+- [x] Perf smoke: waktu `step()` untuk jumlah agent target dicatat sebagai baseline (0.224 ms/tick).
+- [x] Semua checklist penerimaan di dokumen struktur centang.
+- [x] README memungkinkan orang baru menjalankan demo dalam kurang dari 15 menit.
+- [x] Tag `v0.1.0` dan catatan rilis memuat: fitur, batasan yang diketahui, cara reproduksi eksperimen (seed).
 **Checklist playtest manual (10 langkah):**
 1. Jalankan game; peta dan semua agent muncul.
 2. Pause dan lanjutkan; sim benar-benar berhenti dan lanjut.

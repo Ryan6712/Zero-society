@@ -6,7 +6,7 @@ Society Zero adalah simulator masyarakat buatan: individu virtual (*agent*) hidu
  
 > *Do not script the society. Build the conditions that allow society to emerge.*
  
-**Status:** pra-alpha (Sprint 0, 1, 2, & 3 selesai: Utility AI otonom, explainability trace, dan benchmark 20 seed aktif). Target rilis pertama: `v0.1.0` ("Hidup di Desa").
+**Status:** Rilis `v0.1.0` ("Hidup di Desa") — Seluruh Sprint 0, 1, 2, 3, dan 4 selesai. Simulasi deterministik otonom dengan antarmuka visual interaktif aktif.
 
 ---
 
@@ -263,7 +263,7 @@ Issue -> branch feat/SZ-xxx-slug -> tulis tes dulu -> implementasi
 | [1: Inti Simulasi Headless](docs/devlog/sprint-1.md) | 1 minggu | Dunia berdetak, state berubah, tercatat, deterministik | [x] Selesai |
 | [2: Aksi, Validasi, Gerak](docs/devlog/sprint-2.md) | 1 minggu | Aksi valid berjalan, aksi tidak valid ditolak dengan alasan | [x] Selesai |
 | [3: Utility AI dan Explainability](docs/devlog/sprint-3.md) | 1 minggu | Agent memilih aksi sendiri, bisa dijelaskan, kepribadian terlihat | [x] Selesai |
-| 4: View, Kontrol, Hardening, Rilis | 1 minggu | Bisa ditonton dan diperiksa; rilis `v0.1.0` | [ ] Direncanakan |
+| [4: View, Kontrol, Hardening, Rilis](docs/devlog/sprint-4.md) | 1 minggu | Bisa ditonton dan diperiksa; rilis `v0.1.0` | [x] Selesai |
 
 Estimasi total sekitar 4,5 minggu dengan asumsi pengembangan paruh waktu.
 
@@ -279,6 +279,7 @@ Catatan teknis mendalam didokumentasikan per sprint:
 - [Devlog Sprint 1: Inti Simulasi Headless](docs/devlog/sprint-1.md) — SimClock, NeedsSystem, WorldSystem, 46 tes GUT, benchmark determinisme eksak.
 - [Devlog Sprint 2: Aksi, Validasi, Gerak](docs/devlog/sprint-2.md) — ActionLibrary, ActionValidator, MovementSystem A*, ActionSystem, 82 tes GUT, konservasi makanan.
 - [Devlog Sprint 3: Utility AI dan Explainability](docs/devlog/sprint-3.md) — UtilityBrain, Curves, anti ping-pong, survival interrupt, sweep 20 seed (100% survival), 96 tes GUT.
+- [Devlog Sprint 4: View, Kontrol, Hardening, Rilis](docs/devlog/sprint-4.md) — WorldView, AgentView tween, TimeControls, HUD, Inspector (decision trace), 100 tes GUT, golden replay, rilis v0.1.0.
 - [Tuning Log](docs/tuning-log.md) — Riwayat tuning dan sweep agregat.
 - [Pedoman Devlog](docs/opinion/devlog-guidelines.md) — Aturan penulisan devlog dan jadwal pembaruan README.
 
