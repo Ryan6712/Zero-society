@@ -1,14 +1,13 @@
 extends Node2D
 
-
-@onready var _camera: Camera2D = $Camera2D
+const ZOOM_STEP: float = 0.1
+const ZOOM_MIN: float = 0.3
+const ZOOM_MAX: float = 3.0
 
 var _drag_start: Vector2 = Vector2.ZERO
 var _dragging: bool = false
 
-const ZOOM_STEP: float = 0.1
-const ZOOM_MIN: float = 0.3
-const ZOOM_MAX: float = 3.0
+@onready var _camera: Camera2D = $Camera2D
 
 
 func _unhandled_input(event: InputEvent) -> void:
