@@ -28,8 +28,9 @@ Membangun fondasi logika simulasi tanpa visual: waktu tick, state penuh, siklus 
 - **Aturan Arsitektur:** 0 `extends Node` di `sim/`, 0 RNG global.
 - **Benchmark Determinisme:**
   - Perintah: `godot --headless -s tools/run_sim.gd -- --seed 42 --ticks 1000 --check-twice`
-  - Seed 42 Hash: `d6856236a4bd27c1ef26be5246ea66382d9993e08d6488bad826577f2fc9cd52` (identik di 2x run berurutan).
-  - Seed 99 Hash: `c10dc8efc10641acfcac6c1a8245da1f2acbd3a18f2fc57d0958369ed9a8d7d7` (berbeda sesuai ekspektasi).
+  - Seed 42 Hash: `22c6754ff237521a9ccc1646ceae8a7574dae35e2eb289f1358b0f15f758817d` (identik di 2x run berurutan).
+  - Seed 99 Hash: `68dcad0b0a00a452907cf8a2e3567b471675e571dc41d9c4d956d0ad51284b5b` (berbeda sesuai ekspektasi).
+  - Seed 1337 Hash: `6a829f67c6d7cc084a676ba6414b7815dff8ed11c4d92260f486f2edbca16ad7`.
 
 ## 4. Masalah & Solusi (Technical Insights)
 - **Pengurutan `StringName` di Godot 4.7:**

@@ -22,7 +22,7 @@ func test_granary_food_non_negative() -> void:
 	var sim: Simulation = _make_sim()
 	for i: int in range(100):
 		sim.step()
-		assert_gte(sim.world.granary_food, 0.0, "Granary food >= 0")
+		assert_gte(sim.world.granary_food, 0, "Granary food >= 0")
 
 
 func test_dead_agent_no_action() -> void:

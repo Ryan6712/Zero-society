@@ -25,5 +25,5 @@ const WORK_FARM_FOOD_PRODUCED: int = 1
 const WORK_FARM_DURATION: int = 6
 const EAT_DURATION: int = 2
 
-const INITIAL_GRANARY_FOOD: float = 20.0
+const INITIAL_GRANARY_FOOD: int = 20
 const DEFAULT_AGENT_COUNT: int = 3

@@ -42,6 +42,12 @@ func step() -> void:
 			continue
 
 
+func compute_hash() -> String:
+	var data: Dictionary = world.to_dict()
+	data["rng_state"] = str(rng.state)
+	return JSON.stringify(data, "", true, true).sha256_text()
+
+
 static func from_json_file(path: String) -> Simulation:
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
 	if not file:

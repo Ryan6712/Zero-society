@@ -6,7 +6,7 @@ extends RefCounted
 var tick: int = 0
 var seed_value: int = 0
 var agents: Array[AgentState] = []
-var granary_food: float = 0.0
+var granary_food: int = 0
 var grid_data: GridData = null
 var day_phase: StringName = &"day"
 var next_event_id: int = 0
@@ -44,7 +44,6 @@ func to_dict() -> Dictionary:
 
 	return {
 		"tick": tick,
-		"seed_value": seed_value,
 		"agents": agent_dicts,
 		"granary_food": granary_food,
 		"day_phase": String(day_phase),
@@ -53,4 +52,4 @@ func to_dict() -> Dictionary:
 
 
 func compute_hash() -> String:
-	return JSON.stringify(to_dict()).sha256_text()
+	return JSON.stringify(to_dict(), "", true, true).sha256_text()

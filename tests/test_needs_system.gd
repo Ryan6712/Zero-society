@@ -3,7 +3,7 @@ extends GutTest
 
 func _make_world_with_agents(count: int = 3) -> WorldState:
 	var world: WorldState = WorldState.new()
-	world.granary_food = 20.0
+	world.granary_food = 20
 	for i: int in range(count):
 		var agent: AgentState = AgentState.new(StringName("agent_%03d" % i), Vector2i(i, 0))
 		world.agents.append(agent)
