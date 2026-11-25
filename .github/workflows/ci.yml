@@ -26,7 +26,7 @@ jobs:
       - run: gdlint autoload sim view tests tools
 
   test:
-    name: Tes (GUT)
+    name: Tes (GUT & Determinism)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,11 +46,24 @@ jobs:
       - name: Tes unit (GUT)
         run: godot --headless -s addons/gut/gut_cmdln.gd
 
+      - name: Tes determinism (runner headless)
+        run: |
+          for seed in 42 99 1337; do
+            echo "=== seed $seed ==="
+            godot --headless -s tools/run_sim.gd -- --seed "$seed" --ticks 1000 --check-twice
+          done
+
       - name: Pemeriksaan aturan arsitektur
         run: |
           if grep -rnE "^extends Node" sim/; then
             echo "::error::sim/ tidak boleh extends Node"; exit 1
           fi
-          if grep -rnE "\b(randf|randi|randf_range|randi_range)\(" sim/; then
+          if grep -rnP --include='*.gd' "(?<![.\w])(randf|randi|randf_range|randi_range|randfn|randomize|rand_from_seed)\(" sim/; then
             echo "::error::sim/ tidak boleh memakai RNG global"; exit 1
+          fi
+          if grep -rnE --include='*.gd' "\.(shuffle|pick_random)\(" sim/; then
+            echo "::error::sim/ tidak boleh memakai shuffle/pick_random (pakai RNG ber-seed)"; exit 1
+          fi
+          if grep -rnP --include='*.gd' "\b(Time|OS)\.[a-z_]+\(" sim/; then
+            echo "::error::sim/ tidak boleh memanggil Time atau OS"; exit 1
           fi
