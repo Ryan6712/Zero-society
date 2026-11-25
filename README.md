@@ -6,7 +6,7 @@ Society Zero adalah simulator masyarakat buatan: individu virtual (*agent*) hidu
  
 > *Do not script the society. Build the conditions that allow society to emerge.*
  
-**Status:** pra-alpha (Sprint 0 & 1 selesai: fondasi CI, GUT, dan simulasi headless deterministik aktif). Target rilis pertama: `v0.1.0` ("Hidup di Desa").
+**Status:** pra-alpha (Sprint 0, 1, & 2 selesai: aksi, validasi, gerak A*, dan audit konservasi makanan aktif). Target rilis pertama: `v0.1.0` ("Hidup di Desa").
 
 ---
 
@@ -261,7 +261,7 @@ Issue -> branch feat/SZ-xxx-slug -> tulis tes dulu -> implementasi
 |---|---|---|---|
 | [0: Fondasi dan Kontrak](docs/devlog/sprint-0.md) | 3 hari | Repo siap dikontribusi, CI jalan, kontrak data dibekukan | [x] Selesai |
 | [1: Inti Simulasi Headless](docs/devlog/sprint-1.md) | 1 minggu | Dunia berdetak, state berubah, tercatat, deterministik | [x] Selesai |
-| 2: Aksi, Validasi, Gerak | 1 minggu | Aksi valid berjalan, aksi tidak valid ditolak dengan alasan | [ ] Direncanakan |
+| [2: Aksi, Validasi, Gerak](docs/devlog/sprint-2.md) | 1 minggu | Aksi valid berjalan, aksi tidak valid ditolak dengan alasan | [x] Selesai |
 | 3: Utility AI dan Explainability | 1 minggu | Agent memilih aksi sendiri, bisa dijelaskan, kepribadian terlihat | [ ] Direncanakan |
 | 4: View, Kontrol, Hardening, Rilis | 1 minggu | Bisa ditonton dan diperiksa; rilis `v0.1.0` | [ ] Direncanakan |
 
@@ -277,6 +277,7 @@ Catatan teknis mendalam didokumentasikan per sprint:
 
 - [Devlog Sprint 0: Fondasi dan Kontrak](docs/devlog/sprint-0.md) — Setup CI, GUT 9.7.1, kontrak data v0, ADR 001-004.
 - [Devlog Sprint 1: Inti Simulasi Headless](docs/devlog/sprint-1.md) — SimClock, NeedsSystem, WorldSystem, 46 tes GUT, benchmark determinisme eksak.
+- [Devlog Sprint 2: Aksi, Validasi, Gerak](docs/devlog/sprint-2.md) — ActionLibrary, ActionValidator, MovementSystem A*, ActionSystem, 82 tes GUT, konservasi makanan.
 - [Pedoman Devlog](docs/opinion/devlog-guidelines.md) — Aturan penulisan devlog dan jadwal pembaruan README.
 
 ---
