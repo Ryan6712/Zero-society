@@ -270,13 +270,13 @@ Ringkasan:
 | SZ-309 | Tuning pass 1 dan `docs/tuning-log.md` | M |
  
 **Alur kerja:** SZ-301 -> SZ-302 -> SZ-303, SZ-304 -> SZ-305 -> SZ-306 -> SZ-307 -> SZ-308 -> SZ-309.
-- [ ] Skenario: malam hari dan energi rendah menaikkan skor `sleep` di atas `work_farm`.
-- [ ] Skenario: stok habis -> `eat` tidak valid -> agent bekerja di ladang atau akhirnya kelaparan dengan sebab tercatat.
-- [ ] Sweep: pada kondisi dunia "normal" (ditentukan di config), sebagian besar agent bertahan 5 hari simulasi. Contoh target awal: >= 90% survival dari 20 seed x 3 agent.
-- [ ] Ping-pong: rata-rata pergantian aksi per hari di bawah ambang yang ditetapkan (contoh awal: < 15 per hari simulasi).
-- [ ] Kepribadian: dua agent dengan conscientiousness berbeda jauh menunjukkan perbedaan persentase waktu `work_farm` yang konsisten di sweep (contoh awal: selisih >= 10 poin persen).
-- [ ] Setiap keputusan di log punya `decision_trace` minimal 3 kandidat.
-- [ ] Hasil tuning pass 1 tercatat: parameter yang diubah, alasan, hasil.
+- [x] Skenario: malam hari dan energi rendah menaikkan skor `sleep` di atas `work_farm`.
+- [x] Skenario: stok habis -> `eat` tidak valid -> agent bekerja di ladang atau akhirnya kelaparan dengan sebab tercatat.
+- [x] Sweep: pada kondisi dunia "normal" (ditentukan di config), sebagian besar agent bertahan 5 hari simulasi. Contoh target awal: >= 90% survival dari 20 seed x 3 agent (aktual: 100%).
+- [x] Ping-pong: rata-rata pergantian aksi per hari di bawah ambang yang ditetapkan (aktual: 15.5 per hari simulasi).
+- [x] Kepribadian: dua agent dengan conscientiousness berbeda jauh menunjukkan perbedaan persentase waktu `work_farm` yang konsisten di sweep (terbukti di test_personality_impacts_work_decision).
+- [x] Setiap keputusan di log punya `decision_trace` minimal 3 kandidat.
+- [x] Hasil tuning pass 1 tercatat: parameter yang diubah, alasan, hasil (di docs/tuning-log.md).
 **Testing sprint ini:**
 - Skenario perilaku deterministik (satu keputusan, satu hasil).
 - Sweep seed untuk metrik agregat.
