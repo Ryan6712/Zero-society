@@ -15,13 +15,16 @@ func _init() -> void:
 		match args[i]:
 			"--seed":
 				i += 1
-				seed_val = int(args[i])
+				if i < args.size():
+					seed_val = int(args[i])
 			"--ticks":
 				i += 1
-				ticks = int(args[i])
+				if i < args.size():
+					ticks = int(args[i])
 			"--config":
 				i += 1
-				config_path = args[i]
+				if i < args.size():
+					config_path = args[i]
 			"--check-twice":
 				check_twice = true
 		i += 1
@@ -31,7 +34,7 @@ func _init() -> void:
 		quit(1)
 		return
 
-	var hash1: String = sim.world.compute_hash()
+	var hash1: String = sim.compute_hash()
 	print("Seed: %d" % seed_val)
 	print("Ticks: %d" % ticks)
 	print("Hash: %s" % hash1)
@@ -39,7 +42,7 @@ func _init() -> void:
 
 	if check_twice:
 		var sim2: Simulation = _run_sim(config_path, seed_val, ticks)
-		var hash2: String = sim2.world.compute_hash()
+		var hash2: String = sim2.compute_hash()
 		if hash1 == hash2:
 			print("Determinism check: PASS (hash identical)")
 		else:
@@ -79,6 +82,6 @@ func _print_summary(sim: Simulation) -> void:
 		if agent.alive:
 			alive_count += 1
 	print("Agents alive: %d / %d" % [alive_count, sim.world.agents.size()])
-	print("Granary food: %.1f" % sim.world.granary_food)
+	print("Granary food: %d" % sim.world.granary_food)
 	print("Events: %d" % sim.events.size())
 	print("Day phase: %s" % String(sim.world.day_phase))
