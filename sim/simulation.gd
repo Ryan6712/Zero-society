@@ -41,6 +41,7 @@ func step() -> void:
 		var agent: AgentState = world.get_agent(aid)
 		if not agent.alive:
 			continue
+		UtilityBrain.decide_and_act(agent, world, rng, events)
 		ActionSystem.update(agent, world, rng, events)
 
 

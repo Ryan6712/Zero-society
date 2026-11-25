@@ -26,6 +26,7 @@ var personality: Dictionary = {
 var current_action: ActionInstance = null
 var path: Array[Vector2i] = []
 var inventory: Dictionary = {&"food": 0}
+var last_decision_trace: Array[Dictionary] = []
 
 
 func _init(p_id: StringName = &"", p_position: Vector2i = Vector2i.ZERO) -> void:
@@ -59,6 +60,7 @@ func to_dict() -> Dictionary:
 		"current_action": current_action.to_dict() if current_action else {},
 		"path": path,
 		"inventory": sorted_inv,
+		"last_decision_trace": last_decision_trace.duplicate(),
 	}
 
 

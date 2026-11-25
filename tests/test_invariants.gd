@@ -48,21 +48,26 @@ func test_living_agents_on_walkable_tile() -> void:
 
 func test_dead_agent_no_action_and_empty_path() -> void:
 	var sim: Simulation = _make_sim()
-	for i: int in range(500):
+	sim.world.agents[0].needs[&"hunger"] = 0.0
+	sim.world.agents[0].health = 1.0
+	for i: int in range(5):
 		sim.step()
-	for agent: AgentState in sim.world.agents:
-		if not agent.alive:
-			assert_null(agent.current_action, "Dead agent has no action")
-			assert_true(agent.path.is_empty(), "Dead agent has empty path")
+	assert_false(sim.world.agents[0].alive)
+	assert_null(sim.world.agents[0].current_action, "Dead agent has no action")
+	assert_true(sim.world.agents[0].path.is_empty(), "Dead agent has empty path")
 
 
 func test_death_event_has_cause() -> void:
 	var sim: Simulation = _make_sim()
-	for i: int in range(500):
+	sim.world.agents[0].needs[&"hunger"] = 0.0
+	sim.world.agents[0].health = 1.0
+	for i: int in range(5):
 		sim.step()
-	for event: Dictionary in sim.events:
-		if event.get("event_type", "") == "agent_died":
-			assert_true(event.has("cause"), "agent_died must have cause")
+	var death_events: Array[Dictionary] = sim.events.filter(
+		func(e: Dictionary) -> bool: return e.get("event_type", "") == "agent_died"
+	)
+	assert_gt(death_events.size(), 0)
+	assert_true(death_events[0].has("cause"), "agent_died must have cause")
 
 
 func _check_invariants(sim: Simulation) -> void:
