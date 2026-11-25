@@ -14,6 +14,7 @@ func _init(config: Dictionary) -> void:
 	world = WorldState.new()
 	world.seed_value = rng.seed
 	world.granary_food = config.get("granary_food", SimConst.INITIAL_GRANARY_FOOD)
+	world.initial_granary_food = world.granary_food
 
 	var grid_dict: Dictionary = config.get("grid", {})
 	if grid_dict.size() > 0:
@@ -40,6 +41,7 @@ func step() -> void:
 		var agent: AgentState = world.get_agent(aid)
 		if not agent.alive:
 			continue
+		ActionSystem.update(agent, world, rng, events)
 
 
 func compute_hash() -> String:

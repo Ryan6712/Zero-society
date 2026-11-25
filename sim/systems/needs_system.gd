@@ -38,6 +38,7 @@ static func _decay(agent: AgentState, world: WorldState, events: Array[Dictionar
 	if agent.health <= 0.0:
 		agent.alive = false
 		agent.current_action = null
+		agent.path.clear()
 		_emit_event(
 			events,
 			world,
