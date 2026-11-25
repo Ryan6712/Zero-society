@@ -2,12 +2,6 @@ class_name EventSchema
 extends RefCounted
 ## Konstanta field event wajib dan tipe event yang dikenal.
 
-const REQUIRED_FIELDS: Array[StringName] = [
-	&"tick",
-	&"event_type",
-	&"agent_id",
-]
-
 enum EventType {
 	ACTION_STARTED,
 	ACTION_COMPLETED,
@@ -17,6 +11,12 @@ enum EventType {
 	AGENT_DIED,
 	DECISION_MADE,
 }
+
+const REQUIRED_FIELDS: Array[StringName] = [
+	&"tick",
+	&"event_type",
+	&"agent_id",
+]
 
 const EVENT_TYPE_NAMES: Dictionary = {
 	EventType.ACTION_STARTED: "action_started",
