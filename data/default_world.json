@@ -1,0 +1,28 @@
+{
+	"seed": 42,
+	"agent_count": 3,
+	"granary_food": 20,
+	"grid": {
+		"width": 16,
+		"height": 12,
+		"tiles": [
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","house","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","granary","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","farm","farm","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","farm","farm","grass","grass","grass","grass"],
+			["grass","grass","water","water","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","water","water","water","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","water","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"]
+		]
+	},
+	"agent_spawn_positions": [
+		[4, 3],
+		[5, 3],
+		[3, 4]
+	]
+}
