@@ -5,6 +5,7 @@ extends RefCounted
 var world: WorldState
 var rng: RandomNumberGenerator
 var events: Array[Dictionary] = []
+var _command_queue: Array[Command] = []
 
 
 func _init(config: Dictionary) -> void:
@@ -34,6 +35,7 @@ func _init(config: Dictionary) -> void:
 
 
 func step() -> void:
+	_process_commands()
 	world.tick += 1
 	WorldSystem.update(world, rng)
 	NeedsSystem.update(world, events)
@@ -43,6 +45,17 @@ func step() -> void:
 			continue
 		UtilityBrain.decide_and_act(agent, world, rng, events)
 		ActionSystem.update(agent, world, rng, events)
+
+
+func enqueue_command(cmd: Command) -> void:
+	if cmd != null:
+		_command_queue.append(cmd)
+
+
+func _process_commands() -> void:
+	while not _command_queue.is_empty():
+		var cmd: Command = _command_queue.pop_front()
+		cmd.execute(world, events)
 
 
 func compute_hash() -> String:
