@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bn071fkuj544a"
-path="res://.godot/imported/water_decorations.png-06a6c2537a08ecd81379c0ec1473797d.ctex"
+path="res://.godot/imported/water_decorations.png-048b7a47c038d9f9b3e0a097dab9e3e9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Outdoor decoration/water_decorations.png"
-dest_files=["res://.godot/imported/water_decorations.png-06a6c2537a08ecd81379c0ec1473797d.ctex"]
+source_file="res://assets/Outdoor decoration/water_decorations.png"
+dest_files=["res://.godot/imported/water_decorations.png-048b7a47c038d9f9b3e0a097dab9e3e9.ctex"]
 
 [params]
 

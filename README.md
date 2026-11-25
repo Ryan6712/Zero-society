@@ -172,9 +172,9 @@ name: CI
  
 on:
   push:
-    branches: [main]
+	branches: [main]
   pull_request:
-    branches: [main]
+	branches: [main]
  
 concurrency:
   group: ci-${{ github.ref }}
@@ -185,49 +185,49 @@ env:
  
 jobs:
   lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: pip install "gdtoolkit==4.*"
-      - run: gdformat --check autoload sim view tests tools
-      - run: gdlint autoload sim view tests tools
+	runs-on: ubuntu-latest
+	steps:
+	  - uses: actions/checkout@v4
+	  - uses: actions/setup-python@v5
+		with:
+		  python-version: "3.12"
+	  - run: pip install "gdtoolkit==4.*"
+	  - run: gdformat --check autoload sim view tests tools
+	  - run: gdlint autoload sim view tests tools
  
   test:
-    name: Tes (GUT)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+	name: Tes (GUT)
+	runs-on: ubuntu-latest
+	steps:
+	  - uses: actions/checkout@v4
  
-      - name: Pasang Godot
-        run: |
-          URL="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
-          wget -q "$URL" -O godot.zip
-          unzip -q godot.zip
-          chmod +x "Godot_v${GODOT_VERSION}-stable_linux.x86_64"
-          sudo mv "Godot_v${GODOT_VERSION}-stable_linux.x86_64" /usr/local/bin/godot
-          godot --version
+	  - name: Pasang Godot
+		run: |
+		  URL="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+		  wget -q "$URL" -O godot.zip
+		  unzip -q godot.zip
+		  chmod +x "Godot_v${GODOT_VERSION}-stable_linux.x86_64"
+		  sudo mv "Godot_v${GODOT_VERSION}-stable_linux.x86_64" /usr/local/bin/godot
+		  godot --version
  
-      - name: Import proyek
-        run: godot --headless --import
+	  - name: Import proyek
+		run: godot --headless --import
  
-      - name: Tes unit, sistem, skenario (GUT)
-        run: godot --headless -s addons/gut/gut_cmdln.gd
+	  - name: Tes unit, sistem, skenario (GUT)
+		run: godot --headless -s addons/gut/gut_cmdln.gd
  
-      # Aktifkan setelah runner tersedia (Sprint 1):
-      # - name: Tes determinism
-      #   run: godot --headless -s tools/run_sim.gd -- --seed 42 --ticks 1000 --check-twice
+	  # Aktifkan setelah runner tersedia (Sprint 1):
+	  # - name: Tes determinism
+	  #   run: godot --headless -s tools/run_sim.gd -- --seed 42 --ticks 1000 --check-twice
  
-      - name: Pemeriksaan aturan arsitektur
-        run: |
-          if grep -rnE "^extends Node" sim/; then
-            echo "sim/ tidak boleh extends Node"; exit 1
-          fi
-          if grep -rnE "\b(randf|randi|randf_range|randi_range)\(" sim/; then
-            echo "sim/ tidak boleh memakai RNG global"; exit 1
-          fi
+	  - name: Pemeriksaan aturan arsitektur
+		run: |
+		  if grep -rnE "^extends Node" sim/; then
+			echo "sim/ tidak boleh extends Node"; exit 1
+		  fi
+		  if grep -rnE "\b(randf|randi|randf_range|randi_range)\(" sim/; then
+			echo "sim/ tidak boleh memakai RNG global"; exit 1
+		  fi
 ```
  
 ### Catatan CI
@@ -246,7 +246,7 @@ Singkatnya:
  
 ```
 Issue -> branch feat/SZ-xxx-slug -> tulis tes dulu -> implementasi
-      -> lint + tes lokal -> PR kecil -> CI hijau -> review -> squash merge
+	  -> lint + tes lokal -> PR kecil -> CI hijau -> review -> squash merge
 ```
  
 - **Bug:** laporan wajib memuat `seed`, versi/commit, konfigurasi, tick, dan potongan event log. Perbaikan selalu disertai tes regresi.
