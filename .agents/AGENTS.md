@@ -159,7 +159,36 @@ Jangan mengarang perintah, flag, atau versi. Jika ragu, periksa dokumentasi resm
 # runner simulasi headless (tersedia mulai Sprint 1)
 godot --headless -s tools/run_sim.gd -- --seed 42 --ticks 1000
 # format dan lint
-gdlint sim view autoload tests tools
+gdformat autoload sim view tests tools
+gdlint autoload sim view tests tools
+```
+
+---
+
+## 11. Checklist Wajib Sebelum Commit
+
+Jalankan semua langkah berikut **sebelum** setiap commit. Jangan commit jika ada yang gagal.
+
+```bash
+# 1. Format
+gdformat autoload sim view tests tools
+
+# 2. Lint
+gdlint autoload sim view tests tools
+
+# 3. Import + tes
+godot --headless --import
+godot --headless -s addons/gut/gut_cmdln.gd
+
+# 4. Pemeriksaan arsitektur (sim/ tidak boleh extends Node atau pakai RNG global)
+grep -rnE "^extends Node" sim/ && echo "GAGAL: extends Node di sim/" && exit 1
+grep -rnE "\b(randf|randi|randf_range|randi_range)\(" sim/ && echo "GAGAL: RNG global di sim/" && exit 1
+```
+
+Jika `gdformat`/`gdlint` belum terpasang lokal, pasang dengan:
+```bash
+pip install "gdtoolkit==4.*"
+```
 
 
 
