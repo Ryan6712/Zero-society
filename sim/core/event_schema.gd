@@ -10,6 +10,8 @@ enum EventType {
 	NEED_CRITICAL,
 	AGENT_DIED,
 	DECISION_MADE,
+	FOOD_PRODUCED,
+	FOOD_CONSUMED,
 }
 
 const REQUIRED_FIELDS: Array[StringName] = [
@@ -26,6 +28,8 @@ const EVENT_TYPE_NAMES: Dictionary = {
 	EventType.NEED_CRITICAL: "need_critical",
 	EventType.AGENT_DIED: "agent_died",
 	EventType.DECISION_MADE: "decision_made",
+	EventType.FOOD_PRODUCED: "food_produced",
+	EventType.FOOD_CONSUMED: "food_consumed",
 }
 
 

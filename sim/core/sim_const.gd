@@ -24,6 +24,7 @@ const SLEEP_ENERGY_RESTORE: float = 1.2
 const WORK_FARM_FOOD_PRODUCED: int = 1
 const WORK_FARM_DURATION: int = 6
 const EAT_DURATION: int = 2
+const SLEEP_DURATION: int = 48
 
 const INITIAL_GRANARY_FOOD: int = 20
 const DEFAULT_AGENT_COUNT: int = 3
