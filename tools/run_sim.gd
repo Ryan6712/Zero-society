@@ -9,6 +9,7 @@ func _init() -> void:
 	var ticks: int = 1000
 	var config_path: String = "res://data/default_world.json"
 	var check_twice: bool = false
+	var log_path: String = ""
 
 	var i: int = 0
 	while i < args.size():
@@ -25,11 +26,15 @@ func _init() -> void:
 				i += 1
 				if i < args.size():
 					config_path = args[i]
+			"--log":
+				i += 1
+				if i < args.size():
+					log_path = args[i]
 			"--check-twice":
 				check_twice = true
 		i += 1
 
-	var sim: Simulation = _run_sim(config_path, seed_val, ticks)
+	var sim: Simulation = _run_sim(config_path, seed_val, ticks, log_path)
 	if sim == null:
 		quit(1)
 		return
@@ -55,7 +60,7 @@ func _init() -> void:
 	quit(0)
 
 
-func _run_sim(config_path: String, seed_val: int, ticks: int) -> Simulation:
+func _run_sim(config_path: String, seed_val: int, ticks: int, log_path: String = "") -> Simulation:
 	var file: FileAccess = FileAccess.open(config_path, FileAccess.READ)
 	if not file:
 		push_error("Cannot open: %s" % config_path)
@@ -71,8 +76,16 @@ func _run_sim(config_path: String, seed_val: int, ticks: int) -> Simulation:
 	config["seed"] = seed_val
 
 	var sim: Simulation = Simulation.new(config)
+	if not log_path.is_empty():
+		sim.set_log_file(log_path)
+
 	for t: int in range(ticks):
 		sim.step()
+
+	if not log_path.is_empty():
+		sim.close_log_file()
+		print("Log tersimpan di: %s" % log_path)
+
 	return sim
 
 
