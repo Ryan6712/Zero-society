@@ -41,6 +41,19 @@ func test_needs_decay_after_steps() -> void:
 		assert_lt(agent.needs[&"energy"], 100.0)
 
 
+func test_simulation_loads_personality_from_config() -> void:
+	var config: Dictionary = _make_config()
+	config["agent_personalities"] = [
+		{"conscientiousness": 95, "risk_tolerance": 15},
+		{"conscientiousness": 25, "risk_tolerance": 85},
+	]
+	var sim: Simulation = Simulation.new(config)
+	assert_eq(sim.world.agents[0].personality[&"conscientiousness"], 95)
+	assert_eq(sim.world.agents[0].personality[&"risk_tolerance"], 15)
+	assert_eq(sim.world.agents[1].personality[&"conscientiousness"], 25)
+	assert_eq(sim.world.agents[2].personality[&"conscientiousness"], 50)  # Default
+
+
 func _make_config() -> Dictionary:
 	return {
 		"seed": 42,

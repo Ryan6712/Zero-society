@@ -15,16 +15,16 @@ static func _ensure_initialized() -> void:
 	if not _actions.is_empty():
 		return
 
-	_actions[ID_IDLE] = ActionDef.new(ID_IDLE, "Idle", 1, true, &"", 0.0, 0.0, 0.0)
+	_actions[ID_IDLE] = ActionDef.new(ID_IDLE, "Idle", 1, true, &"", 0.0, 0.0)
 
-	_actions[ID_MOVE] = ActionDef.new(ID_MOVE, "Move", 1, true, &"", 0.0, 0.05, 0.05)
+	_actions[ID_MOVE] = ActionDef.new(ID_MOVE, "Move", 1, true, &"", 0.0, 0.0)
 
 	_actions[ID_EAT] = ActionDef.new(
-		ID_EAT, "Eat", SimConst.EAT_DURATION, false, GridData.TILE_GRANARY, 0.0, 0.0, 0.0
+		ID_EAT, "Eat", SimConst.EAT_DURATION, false, GridData.TILE_GRANARY, 0.0, 0.0
 	)
 
 	_actions[ID_SLEEP] = ActionDef.new(
-		ID_SLEEP, "Sleep", SimConst.SLEEP_DURATION, true, GridData.TILE_HOUSE, 0.0, 0.0, 0.0
+		ID_SLEEP, "Sleep", SimConst.SLEEP_DURATION, true, GridData.TILE_HOUSE, 0.0, 0.0
 	)
 
 	_actions[ID_WORK_FARM] = ActionDef.new(
@@ -34,8 +34,7 @@ static func _ensure_initialized() -> void:
 		true,
 		GridData.TILE_FARM,
 		20.0,
-		SimConst.ENERGY_DECAY_WORKING - SimConst.ENERGY_DECAY,
-		0.0
+		SimConst.ENERGY_DECAY_WORKING - SimConst.ENERGY_DECAY
 	)
 
 

@@ -9,7 +9,6 @@ extends Resource
 @export var required_location: StringName = &""
 @export var min_energy: float = 0.0
 @export var energy_cost_per_tick: float = 0.0
-@export var hunger_cost_per_tick: float = 0.0
 
 
 func _init(
@@ -19,8 +18,7 @@ func _init(
 	p_interruptible: bool = true,
 	p_required_location: StringName = &"",
 	p_min_energy: float = 0.0,
-	p_energy_cost_per_tick: float = 0.0,
-	p_hunger_cost_per_tick: float = 0.0
+	p_energy_cost_per_tick: float = 0.0
 ) -> void:
 	id = p_id
 	display_name = p_display_name
@@ -29,4 +27,3 @@ func _init(
 	required_location = p_required_location
 	min_energy = p_min_energy
 	energy_cost_per_tick = p_energy_cost_per_tick
-	hunger_cost_per_tick = p_hunger_cost_per_tick

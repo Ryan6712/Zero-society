@@ -20,7 +20,6 @@ var starving_ticks: int = 0
 var personality: Dictionary = {
 	&"conscientiousness": 50,
 	&"risk_tolerance": 50,
-	&"ambition": 50,
 }
 
 var current_action: ActionInstance = null

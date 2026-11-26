@@ -24,5 +24,10 @@
 		[4, 3],
 		[5, 3],
 		[3, 4]
+	],
+	"agent_personalities": [
+		{"conscientiousness": 80, "risk_tolerance": 30},
+		{"conscientiousness": 50, "risk_tolerance": 50},
+		{"conscientiousness": 20, "risk_tolerance": 70}
 	]
 }

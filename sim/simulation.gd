@@ -2,9 +2,12 @@ class_name Simulation
 extends RefCounted
 ## Orkestrator simulasi. Menjalankan step() per tick.
 
+const MAX_MEMORY_EVENTS: int = 1000
+
 var world: WorldState
 var rng: RandomNumberGenerator
 var events: Array[Dictionary] = []
+var log_file: FileAccess = null
 var _command_queue: Array[Command] = []
 
 
@@ -22,6 +25,7 @@ func _init(config: Dictionary) -> void:
 		world.grid_data = GridData.from_dict(grid_dict)
 
 	var spawn_positions: Array = config.get("agent_spawn_positions", [])
+	var personalities: Array = config.get("agent_personalities", [])
 	var agent_count: int = config.get("agent_count", SimConst.DEFAULT_AGENT_COUNT)
 	for i: int in range(agent_count):
 		var agent: AgentState = AgentState.new()
@@ -31,6 +35,12 @@ func _init(config: Dictionary) -> void:
 			var sp: Array = spawn_positions[i]
 			agent.position = Vector2i(sp[0], sp[1])
 		agent.home_tile = agent.position
+		if i < personalities.size():
+			var p: Dictionary = personalities[i]
+			var c: int = clampi(p.get("conscientiousness", 50), 0, 100)
+			var r: int = clampi(p.get("risk_tolerance", 50), 0, 100)
+			agent.personality[&"conscientiousness"] = c
+			agent.personality[&"risk_tolerance"] = r
 		world.agents.append(agent)
 
 
@@ -45,6 +55,32 @@ func step() -> void:
 			continue
 		UtilityBrain.decide_and_act(agent, world, rng, events)
 		ActionSystem.update(agent, world, rng, events)
+
+	_flush_and_trim_events()
+
+
+func set_log_file(path: String) -> bool:
+	log_file = FileAccess.open(path, FileAccess.WRITE)
+	if not log_file:
+		push_error("Gagal membuka file log: %s" % path)
+		return false
+	return true
+
+
+func close_log_file() -> void:
+	if log_file != null:
+		log_file.close()
+		log_file = null
+
+
+func _flush_and_trim_events() -> void:
+	if log_file != null:
+		for event: Dictionary in events:
+			log_file.store_line(JSON.stringify(event))
+			log_file.flush()
+		events.clear()
+	elif events.size() > MAX_MEMORY_EVENTS:
+		events = events.slice(events.size() - MAX_MEMORY_EVENTS)
 
 
 func enqueue_command(cmd: Command) -> void:

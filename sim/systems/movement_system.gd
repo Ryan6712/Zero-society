@@ -2,8 +2,6 @@ class_name MovementSystem
 extends RefCounted
 ## Pathfinding AStarGrid2D dan perpindahan agent per tile.
 
-static var _astar_cache: Dictionary = {}
-
 
 static func build_astar(grid_data: GridData) -> AStarGrid2D:
 	var astar: AStarGrid2D = AStarGrid2D.new()
