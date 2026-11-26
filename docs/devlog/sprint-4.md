@@ -21,14 +21,14 @@ Mengintegrasikan seluruh subsistem simulasi ke antarmuka visual Godot: `WorldVie
 - **Hardening & Testing:**
   - `test_view_state_isolation.gd`: Membuktikan bahwa hash simulasi dengan view aktif identik 100% dengan eksekusi headless.
   - `test_perf_smoke.gd`: Mengukur 1000 tick pada 5 agent selesai dalam 224 ms (0.224 ms/tick).
-  - `test_golden_replay.gd`: Membekukan golden hash resmi `c874cbf4d7170a66ff406e19f7d63513330af028ba49d7d4b37048205bc80e01` untuk seed 42 pada tick 1000.
+  - `test_golden_replay.gd`: Membekukan golden hash resmi `528cbd1ad359594ed518e05433a1b11c8f965388ef7d02ea49d960fe8ac019a4` untuk seed 42 pada tick 1000.
 
 ## 3. Hasil Pengujian & Benchmark
 - **GUT Unit Test:** 22 script, 100 tests, **100 passed (100% green)**, 141.621 asserts.
 - **Linter & Formatter:** `gdformat` & `gdlint` bersih (0 issues).
 - **Aturan Arsitektur:** 0 `extends Node`, 0 RNG global, 0 `Time`/`OS` di `sim/`.
 - **Smoke Perf:** 0.224 ms/tick (< 2.0 ms ambang batas).
-- **Golden Hash Replay (Seed 42, Tick 1000):** PASS.
+- **Golden Hash Replay (Seed 42, Tick 1000):** `528cbd1ad359594ed518e05433a1b11c8f965388ef7d02ea49d960fe8ac019a4`.
 
 ## 4. Status Rilis v0.1.0 ("Hidup di Desa")
 Target milestone v0.1.0 tercapai secara lengkap: 3-5 NPC hidup mandiri, bekerja di ladang, makan di lumbung, tidur di rumah, menolak aksi tidak valid, semua keputusan dapat dijelaskan dan ditelusuri lewat inspector, serta hasil simulasi identik 100% untuk seed yang sama.
