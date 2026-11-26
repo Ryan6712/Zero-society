@@ -18,7 +18,11 @@ var health: float = 100.0
 var starving_ticks: int = 0
 
 var personality: Dictionary = {
+	&"adventurous": 50,
+	&"cautious": 50,
 	&"conscientiousness": 50,
+	&"industrious": 50,
+	&"lazy": 50,
 	&"risk_tolerance": 50,
 }
 
@@ -26,6 +30,25 @@ var current_action: ActionInstance = null
 var path: Array[Vector2i] = []
 var inventory: Dictionary = {&"food": 0}
 var last_decision_trace: Array[Dictionary] = []
+
+
+func set_trait(trait_name: StringName, value: int) -> void:
+	var val: int = clampi(value, 0, 100)
+	personality[trait_name] = val
+	match trait_name:
+		&"industrious":
+			personality[&"conscientiousness"] = val
+			personality[&"lazy"] = 100 - val
+		&"conscientiousness":
+			personality[&"industrious"] = val
+			personality[&"lazy"] = 100 - val
+		&"lazy":
+			personality[&"industrious"] = 100 - val
+			personality[&"conscientiousness"] = 100 - val
+		&"cautious":
+			personality[&"risk_tolerance"] = 100 - val
+		&"risk_tolerance":
+			personality[&"cautious"] = 100 - val
 
 
 func _init(p_id: StringName = &"", p_position: Vector2i = Vector2i.ZERO) -> void:

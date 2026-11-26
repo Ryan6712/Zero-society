@@ -162,9 +162,9 @@ static func _score_action(
 				score = 0.0
 			else:
 				var hunger_urgency: float = Curves.urgency(agent.needs.get(&"hunger", 100.0))
-				var risk_tol: int = agent.personality.get(&"risk_tolerance", 50)
+				var cautious: int = agent.personality.get(&"cautious", 50)
 				var adjusted_urgency: float = (
-					hunger_urgency * (1.0 - 0.3 * (float(risk_tol) / 100.0))
+					hunger_urgency * (0.8 + 0.4 * (float(cautious) / 100.0))
 				)
 				var granaries: Array[Vector2i] = []
 				if world.grid_data != null:
@@ -198,6 +198,8 @@ static func _score_action(
 				score = 0.0
 			else:
 				var health_urgency: float = Curves.urgency(agent.health)
+				var cautious: int = agent.personality.get(&"cautious", 50)
+				var recover_mult: float = 1.2 + 0.8 * (float(cautious) / 100.0)
 				var houses: Array[Vector2i] = []
 				if world.grid_data != null:
 					houses = world.grid_data.get_locations_of_type(GridData.TILE_HOUSE)
@@ -208,13 +210,18 @@ static func _score_action(
 						else Curves.nearest_tile(agent.position, houses)
 					)
 					var dist: int = Curves.manhattan_distance(agent.position, target_tile)
-					score = health_urgency * 1.8 * Curves.distance_factor(dist)
+					score = health_urgency * recover_mult * Curves.distance_factor(dist)
 				else:
-					score = health_urgency * 1.8
+					score = health_urgency * recover_mult
 
 		ActionLibrary.ID_WORK_FARM:
-			var conscientiousness: int = agent.personality.get(&"conscientiousness", 50)
-			var kerja_drive: float = 0.3 + 0.5 * (float(conscientiousness) / 100.0)
+			var industrious: int = agent.personality.get(&"industrious", 50)
+			if agent.personality.get(&"conscientiousness", 50) != 50 and industrious == 50:
+				industrious = agent.personality[&"conscientiousness"]
+			var lazy: int = agent.personality.get(&"lazy", 50)
+			var kerja_drive: float = maxf(
+				0.05, (0.25 + 0.55 * (float(industrious) / 100.0)) - (0.15 * (float(lazy) / 100.0))
+			)
 			var max_need: float = maxf(
 				Curves.urgency(agent.needs.get(&"hunger", 100.0)),
 				Curves.urgency(agent.needs.get(&"energy", 100.0))
@@ -255,7 +262,12 @@ static func _score_action(
 			else:
 				var idx: int = rng.randi_range(0, valid_neighbors.size() - 1)
 				target_tile = valid_neighbors[idx]
-				score = 0.08 * (1.0 - max_need)
+				var adventurous: int = agent.personality.get(&"adventurous", 50)
+				var lazy: int = agent.personality.get(&"lazy", 50)
+				var wander_mult: float = (
+					0.5 + 0.8 * (float(adventurous) / 100.0) + 0.3 * (float(lazy) / 100.0)
+				)
+				score = 0.08 * wander_mult * (1.0 - max_need)
 
 		ActionLibrary.ID_IDLE:
 			score = FLOOR_SCORE_IDLE

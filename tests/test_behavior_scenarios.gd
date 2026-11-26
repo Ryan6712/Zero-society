@@ -100,13 +100,13 @@ func test_personality_impacts_work_decision() -> void:
 		"agent_spawn_positions": [[2, 0]],
 	}
 	var sim_lazy: Simulation = Simulation.new(lazy_config)
-	sim_lazy.world.agents[0].personality[&"conscientiousness"] = 10
+	sim_lazy.world.agents[0].set_trait(&"conscientiousness", 10)
 	sim_lazy.world.agents[0].needs[&"energy"] = 70.0
 	sim_lazy.world.agents[0].needs[&"hunger"] = 70.0
 
 	var hard_config: Dictionary = lazy_config.duplicate(true)
 	var sim_hard: Simulation = Simulation.new(hard_config)
-	sim_hard.world.agents[0].personality[&"conscientiousness"] = 95
+	sim_hard.world.agents[0].set_trait(&"conscientiousness", 95)
 	sim_hard.world.agents[0].needs[&"energy"] = 70.0
 	sim_hard.world.agents[0].needs[&"hunger"] = 70.0
 
