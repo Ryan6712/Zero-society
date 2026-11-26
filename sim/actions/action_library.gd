@@ -7,6 +7,8 @@ const ID_MOVE: StringName = &"move"
 const ID_EAT: StringName = &"eat"
 const ID_SLEEP: StringName = &"sleep"
 const ID_WORK_FARM: StringName = &"work_farm"
+const ID_WANDER: StringName = &"wander"
+const ID_RECOVER: StringName = &"recover"
 
 static var _actions: Dictionary = {}
 
@@ -35,6 +37,12 @@ static func _ensure_initialized() -> void:
 		GridData.TILE_FARM,
 		20.0,
 		SimConst.ENERGY_DECAY_WORKING - SimConst.ENERGY_DECAY
+	)
+
+	_actions[ID_WANDER] = ActionDef.new(ID_WANDER, "Wander", 1, true, &"", 0.0, 0.0)
+
+	_actions[ID_RECOVER] = ActionDef.new(
+		ID_RECOVER, "Recover", SimConst.RECOVER_DURATION, true, GridData.TILE_HOUSE, 0.0, 0.0
 	)
 
 

@@ -29,7 +29,7 @@ static func start_action(
 
 	var duration: int = action_def.duration_ticks
 
-	if action_def.id == ActionLibrary.ID_MOVE:
+	if action_def.id in [ActionLibrary.ID_MOVE, ActionLibrary.ID_WANDER]:
 		var path: Array[Vector2i] = MovementSystem.find_path(
 			agent.position, target_tile, world.grid_data
 		)
@@ -100,7 +100,7 @@ static func update(
 	var instance: ActionInstance = agent.current_action
 	var def: ActionDef = instance.def
 
-	if def.id == ActionLibrary.ID_MOVE:
+	if def.id in [ActionLibrary.ID_MOVE, ActionLibrary.ID_WANDER]:
 		MovementSystem.update(agent, world)
 		instance.ticks_left -= 1
 	else:
@@ -111,6 +111,11 @@ static func update(
 			agent.needs[&"energy"] + SimConst.SLEEP_ENERGY_RESTORE, 0.0, 100.0
 		)
 		if agent.needs[&"energy"] >= 100.0:
+			instance.ticks_left = 0
+
+	elif def.id == ActionLibrary.ID_RECOVER:
+		agent.health = clampf(agent.health + SimConst.RECOVER_HEALTH_RESTORE, 0.0, 100.0)
+		if agent.health >= 100.0:
 			instance.ticks_left = 0
 
 	elif def.id == ActionLibrary.ID_WORK_FARM:

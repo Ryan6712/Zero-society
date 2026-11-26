@@ -58,7 +58,7 @@ static func can_start(
 		if world.granary_food <= 0:
 			return RejectReason.NO_STOCK
 
-	if action_def.id == ActionLibrary.ID_MOVE:
+	if action_def.id in [ActionLibrary.ID_MOVE, ActionLibrary.ID_WANDER]:
 		if target_tile == agent.position:
 			return RejectReason.INVALID_TARGET
 		if world.grid_data != null:

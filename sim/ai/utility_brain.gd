@@ -13,14 +13,16 @@ static func choose(agent: AgentState, world: WorldState, rng: RandomNumberGenera
 	var candidates: Array[StringName] = [
 		ActionLibrary.ID_EAT,
 		ActionLibrary.ID_SLEEP,
+		ActionLibrary.ID_RECOVER,
 		ActionLibrary.ID_WORK_FARM,
+		ActionLibrary.ID_WANDER,
 		ActionLibrary.ID_IDLE,
 	]
 
 	var scored: Array[Dictionary] = []
 
 	for action_id: StringName in candidates:
-		var result: Dictionary = _score_action(agent, action_id, world)
+		var result: Dictionary = _score_action(agent, action_id, world, rng)
 		var base_score: float = result["score"]
 		var target_tile: Vector2i = result["target_tile"]
 
@@ -112,6 +114,16 @@ static func decide_and_act(
 		ActionSystem.start_action(agent, idle_def, world, agent.position, events)
 		return
 
+	if best_id == ActionLibrary.ID_WANDER:
+		var wander_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_WANDER)
+		var reason: ActionValidator.RejectReason = ActionSystem.start_action(
+			agent, wander_def, world, target_tile, events, best_id
+		)
+		if reason != ActionValidator.RejectReason.OK:
+			var idle_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_IDLE)
+			ActionSystem.start_action(agent, idle_def, world, agent.position, events)
+		return
+
 	var intended_def: ActionDef = ActionLibrary.get_action(best_id)
 	if intended_def == null:
 		return
@@ -139,7 +151,7 @@ static func decide_and_act(
 
 
 static func _score_action(
-	agent: AgentState, action_id: StringName, world: WorldState
+	agent: AgentState, action_id: StringName, world: WorldState, rng: RandomNumberGenerator
 ) -> Dictionary:
 	var target_tile: Vector2i = agent.position
 	var score: float = 0.0
@@ -181,6 +193,25 @@ static func _score_action(
 			else:
 				score = energy_urgency * night_mult
 
+		ActionLibrary.ID_RECOVER:
+			if agent.health >= 100.0:
+				score = 0.0
+			else:
+				var health_urgency: float = Curves.urgency(agent.health)
+				var houses: Array[Vector2i] = []
+				if world.grid_data != null:
+					houses = world.grid_data.get_locations_of_type(GridData.TILE_HOUSE)
+				if not houses.is_empty():
+					target_tile = (
+						agent.home_tile
+						if agent.home_tile in houses
+						else Curves.nearest_tile(agent.position, houses)
+					)
+					var dist: int = Curves.manhattan_distance(agent.position, target_tile)
+					score = health_urgency * 1.8 * Curves.distance_factor(dist)
+				else:
+					score = health_urgency * 1.8
+
 		ActionLibrary.ID_WORK_FARM:
 			var conscientiousness: int = agent.personality.get(&"conscientiousness", 50)
 			var kerja_drive: float = 0.3 + 0.5 * (float(conscientiousness) / 100.0)
@@ -201,6 +232,30 @@ static func _score_action(
 					score = maxf(0.0, kerja_drive * (1.0 - max_need)) * Curves.distance_factor(dist)
 				else:
 					score = maxf(0.0, kerja_drive * (1.0 - max_need))
+
+		ActionLibrary.ID_WANDER:
+			var max_need: float = maxf(
+				Curves.urgency(agent.needs.get(&"hunger", 100.0)),
+				Curves.urgency(agent.needs.get(&"energy", 100.0))
+			)
+			var valid_neighbors: Array[Vector2i] = []
+			if world.grid_data != null:
+				var offsets: Array[Vector2i] = [
+					Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)
+				]
+				for offset: Vector2i in offsets:
+					var neighbor: Vector2i = agent.position + offset
+					if (
+						world.grid_data.is_in_bounds(neighbor)
+						and world.grid_data.is_walkable(neighbor)
+					):
+						valid_neighbors.append(neighbor)
+			if valid_neighbors.is_empty():
+				score = 0.0
+			else:
+				var idx: int = rng.randi_range(0, valid_neighbors.size() - 1)
+				target_tile = valid_neighbors[idx]
+				score = 0.08 * (1.0 - max_need)
 
 		ActionLibrary.ID_IDLE:
 			score = FLOOR_SCORE_IDLE
