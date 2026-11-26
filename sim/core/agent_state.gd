@@ -28,7 +28,7 @@ var personality: Dictionary = {
 
 var current_action: ActionInstance = null
 var path: Array[Vector2i] = []
-var inventory: Dictionary = {&"food": 0}
+var inventory: Dictionary = {&"food": 0, &"rock": 0, &"wood": 0}
 var last_decision_trace: Array[Dictionary] = []
 
 

@@ -11,6 +11,8 @@ const COLOR_FARM: Color = Color(0.55, 0.38, 0.22)
 const COLOR_HOUSE: Color = Color(0.72, 0.45, 0.30)
 const COLOR_GRANARY: Color = Color(0.85, 0.70, 0.35)
 const COLOR_WATER: Color = Color(0.25, 0.55, 0.85)
+const COLOR_FOREST: Color = Color(0.18, 0.45, 0.22)
+const COLOR_MINE: Color = Color(0.50, 0.50, 0.55)
 const COLOR_DEFAULT: Color = Color(0.30, 0.30, 0.30)
 
 const AGENT_COLORS: Array[Color] = [
@@ -82,16 +84,13 @@ func _draw() -> void:
 
 
 func _color_for_tile(tile_type: StringName) -> Color:
-	match tile_type:
-		GridData.TILE_GRASS:
-			return COLOR_GRASS
-		GridData.TILE_FARM:
-			return COLOR_FARM
-		GridData.TILE_HOUSE:
-			return COLOR_HOUSE
-		GridData.TILE_GRANARY:
-			return COLOR_GRANARY
-		GridData.TILE_WATER:
-			return COLOR_WATER
-		_:
-			return COLOR_DEFAULT
+	var color_map: Dictionary = {
+		GridData.TILE_GRASS: COLOR_GRASS,
+		GridData.TILE_FARM: COLOR_FARM,
+		GridData.TILE_HOUSE: COLOR_HOUSE,
+		GridData.TILE_GRANARY: COLOR_GRANARY,
+		GridData.TILE_WATER: COLOR_WATER,
+		GridData.TILE_FOREST: COLOR_FOREST,
+		GridData.TILE_MINE: COLOR_MINE,
+	}
+	return color_map.get(tile_type, COLOR_DEFAULT)

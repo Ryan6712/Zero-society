@@ -15,6 +15,9 @@ static func choose(agent: AgentState, world: WorldState, rng: RandomNumberGenera
 		ActionLibrary.ID_SLEEP,
 		ActionLibrary.ID_RECOVER,
 		ActionLibrary.ID_WORK_FARM,
+		ActionLibrary.ID_WATER_CROP,
+		ActionLibrary.ID_CHOP_WOOD,
+		ActionLibrary.ID_MINE_ROCK,
 		ActionLibrary.ID_WANDER,
 		ActionLibrary.ID_IDLE,
 	]
@@ -239,6 +242,60 @@ static func _score_action(
 					score = maxf(0.0, kerja_drive * (1.0 - max_need)) * Curves.distance_factor(dist)
 				else:
 					score = maxf(0.0, kerja_drive * (1.0 - max_need))
+
+		ActionLibrary.ID_CHOP_WOOD:
+			var forests: Array[Vector2i] = []
+			if world.grid_data != null:
+				forests = world.grid_data.get_locations_of_type(GridData.TILE_FOREST)
+			if forests.is_empty() or agent.needs.get(&"energy", 100.0) < 15.0:
+				score = 0.0
+			else:
+				target_tile = Curves.nearest_tile(agent.position, forests)
+				var dist: int = Curves.distance_to_nearest(agent.position, forests)
+				var max_need: float = maxf(
+					Curves.urgency(agent.needs.get(&"hunger", 100.0)),
+					Curves.urgency(agent.needs.get(&"energy", 100.0))
+				)
+				var industrious: int = agent.personality.get(&"industrious", 50)
+				var adventurous: int = agent.personality.get(&"adventurous", 50)
+				var drive: float = (
+					0.15 + 0.3 * (float(industrious) / 100.0) + 0.25 * (float(adventurous) / 100.0)
+				)
+				score = maxf(0.0, drive * (1.0 - max_need)) * Curves.distance_factor(dist)
+
+		ActionLibrary.ID_MINE_ROCK:
+			var mines: Array[Vector2i] = []
+			if world.grid_data != null:
+				mines = world.grid_data.get_locations_of_type(GridData.TILE_MINE)
+			if mines.is_empty() or agent.needs.get(&"energy", 100.0) < 20.0:
+				score = 0.0
+			else:
+				target_tile = Curves.nearest_tile(agent.position, mines)
+				var dist: int = Curves.distance_to_nearest(agent.position, mines)
+				var max_need: float = maxf(
+					Curves.urgency(agent.needs.get(&"hunger", 100.0)),
+					Curves.urgency(agent.needs.get(&"energy", 100.0))
+				)
+				var industrious: int = agent.personality.get(&"industrious", 50)
+				var drive: float = 0.12 + 0.35 * (float(industrious) / 100.0)
+				score = maxf(0.0, drive * (1.0 - max_need)) * Curves.distance_factor(dist)
+
+		ActionLibrary.ID_WATER_CROP:
+			var farms: Array[Vector2i] = []
+			if world.grid_data != null:
+				farms = world.grid_data.get_locations_of_type(GridData.TILE_FARM)
+			if farms.is_empty() or agent.needs.get(&"energy", 100.0) < 10.0 or world.is_night():
+				score = 0.0
+			else:
+				target_tile = Curves.nearest_tile(agent.position, farms)
+				var dist: int = Curves.distance_to_nearest(agent.position, farms)
+				var max_need: float = maxf(
+					Curves.urgency(agent.needs.get(&"hunger", 100.0)),
+					Curves.urgency(agent.needs.get(&"energy", 100.0))
+				)
+				var cautious: int = agent.personality.get(&"cautious", 50)
+				var drive: float = 0.10 + 0.25 * (float(cautious) / 100.0)
+				score = maxf(0.0, drive * (1.0 - max_need)) * Curves.distance_factor(dist)
 
 		ActionLibrary.ID_WANDER:
 			var max_need: float = maxf(

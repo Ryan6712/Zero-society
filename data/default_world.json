@@ -7,14 +7,14 @@
 		"height": 12,
 		"tiles": [
 			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
-			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","forest","forest","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","mine","mine"],
 			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
 			["grass","grass","grass","house","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
 			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
 			["grass","grass","grass","grass","grass","grass","granary","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
 			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
-			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","farm","farm","grass","grass","grass","grass"],
-			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","farm","farm","grass","grass","grass","grass"],
+			["grass","forest","grass","grass","grass","grass","grass","grass","grass","grass","farm","farm","grass","grass","grass","grass"],
+			["grass","forest","grass","grass","grass","grass","grass","grass","grass","grass","farm","farm","grass","grass","grass","grass"],
 			["grass","grass","water","water","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
 			["grass","grass","water","water","water","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
 			["grass","grass","grass","water","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"]

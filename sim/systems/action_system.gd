@@ -128,7 +128,7 @@ static func update(
 		if agent.health >= 100.0:
 			instance.ticks_left = 0
 
-	elif def.id == ActionLibrary.ID_WORK_FARM:
+	elif def.energy_cost_per_tick > 0.0:
 		agent.needs[&"energy"] = clampf(
 			agent.needs[&"energy"] - def.energy_cost_per_tick, 0.0, 100.0
 		)
@@ -195,6 +195,12 @@ static func _complete_action(
 
 	elif def.id == ActionLibrary.ID_WORK_FARM:
 		world.modify_granary_food(SimConst.WORK_FARM_FOOD_PRODUCED, &"work_farm", agent.id, events)
+
+	elif def.id == ActionLibrary.ID_CHOP_WOOD:
+		agent.inventory[&"wood"] = agent.inventory.get(&"wood", 0) + 1
+
+	elif def.id == ActionLibrary.ID_MINE_ROCK:
+		agent.inventory[&"rock"] = agent.inventory.get(&"rock", 0) + 1
 
 	var obj: WorldObject = world.get_object_at(agent.position)
 	if obj != null:

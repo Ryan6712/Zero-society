@@ -7,8 +7,12 @@ const TILE_FARM: StringName = &"farm"
 const TILE_HOUSE: StringName = &"house"
 const TILE_GRANARY: StringName = &"granary"
 const TILE_WATER: StringName = &"water"
+const TILE_FOREST: StringName = &"forest"
+const TILE_MINE: StringName = &"mine"
 
-const WALKABLE_TYPES: Array[StringName] = [TILE_GRASS, TILE_FARM, TILE_HOUSE, TILE_GRANARY]
+const WALKABLE_TYPES: Array[StringName] = [
+	TILE_GRASS, TILE_FARM, TILE_HOUSE, TILE_GRANARY, TILE_FOREST, TILE_MINE
+]
 
 var width: int = 0
 var height: int = 0

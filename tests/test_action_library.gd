@@ -4,7 +4,7 @@ extends GutTest
 
 func test_all_actions_registered() -> void:
 	var actions: Array[ActionDef] = ActionLibrary.all()
-	assert_eq(actions.size(), 7)
+	assert_eq(actions.size(), 10)
 
 
 func test_get_individual_actions() -> void:
@@ -29,6 +29,18 @@ func test_get_individual_actions() -> void:
 	var recover_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_RECOVER)
 	assert_not_null(recover_def)
 	assert_eq(recover_def.required_location, GridData.TILE_HOUSE)
+
+	var chop_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_CHOP_WOOD)
+	assert_not_null(chop_def)
+	assert_eq(chop_def.required_location, GridData.TILE_FOREST)
+
+	var mine_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_MINE_ROCK)
+	assert_not_null(mine_def)
+	assert_eq(mine_def.required_location, GridData.TILE_MINE)
+
+	var water_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_WATER_CROP)
+	assert_not_null(water_def)
+	assert_eq(water_def.required_location, GridData.TILE_FARM)
 
 
 func test_get_nonexistent_action() -> void:

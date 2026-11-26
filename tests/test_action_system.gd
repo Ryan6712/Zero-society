@@ -176,3 +176,31 @@ func test_wander_moves_agent_to_target_tile() -> void:
 
 	ActionSystem.update(_agent, _world, _rng, _events)
 	assert_eq(_agent.position, Vector2i(1, 0), "Agent harus berpindah ke target tile saat wander")
+
+
+func test_chop_wood_produces_wood_inventory() -> void:
+	_world.grid_data.tiles[Vector2i(4, 0)] = GridData.TILE_FOREST
+	_agent.position = Vector2i(4, 0)
+	_agent.needs[&"energy"] = 80.0
+	var chop_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_CHOP_WOOD)
+	ActionSystem.start_action(_agent, chop_def, _world, Vector2i.ZERO, _events)
+
+	for i: int in range(chop_def.duration_ticks):
+		ActionSystem.update(_agent, _world, _rng, _events)
+
+	assert_null(_agent.current_action)
+	assert_eq(_agent.inventory[&"wood"], 1, "Agent harus mendapatkan 1 kayu setelah menebang")
+
+
+func test_mine_rock_produces_rock_inventory() -> void:
+	_world.grid_data.tiles[Vector2i(5, 0)] = GridData.TILE_MINE
+	_agent.position = Vector2i(5, 0)
+	_agent.needs[&"energy"] = 80.0
+	var mine_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_MINE_ROCK)
+	ActionSystem.start_action(_agent, mine_def, _world, Vector2i.ZERO, _events)
+
+	for i: int in range(mine_def.duration_ticks):
+		ActionSystem.update(_agent, _world, _rng, _events)
+
+	assert_null(_agent.current_action)
+	assert_eq(_agent.inventory[&"rock"], 1, "Agent harus mendapatkan 1 batu setelah menambang")

@@ -64,6 +64,16 @@ func _register_default_world_objects() -> void:
 					StringName("granary_%d_%d" % [pos.x, pos.y]), GridData.TILE_GRANARY, pos, 99
 				)
 				world.register_world_object(obj)
+			GridData.TILE_FOREST:
+				var obj: WorldObject = WorldObject.new(
+					StringName("tree_%d_%d" % [pos.x, pos.y]), GridData.TILE_FOREST, pos, 1
+				)
+				world.register_world_object(obj)
+			GridData.TILE_MINE:
+				var obj: WorldObject = WorldObject.new(
+					StringName("rock_%d_%d" % [pos.x, pos.y]), GridData.TILE_MINE, pos, 1
+				)
+				world.register_world_object(obj)
 
 
 func step() -> void:

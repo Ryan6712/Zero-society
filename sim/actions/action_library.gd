@@ -9,6 +9,9 @@ const ID_SLEEP: StringName = &"sleep"
 const ID_WORK_FARM: StringName = &"work_farm"
 const ID_WANDER: StringName = &"wander"
 const ID_RECOVER: StringName = &"recover"
+const ID_CHOP_WOOD: StringName = &"chop_wood"
+const ID_MINE_ROCK: StringName = &"mine_rock"
+const ID_WATER_CROP: StringName = &"water_crop"
 
 static var _actions: Dictionary = {}
 
@@ -43,6 +46,18 @@ static func _ensure_initialized() -> void:
 
 	_actions[ID_RECOVER] = ActionDef.new(
 		ID_RECOVER, "Recover", SimConst.RECOVER_DURATION, true, GridData.TILE_HOUSE, 0.0, 0.0
+	)
+
+	_actions[ID_CHOP_WOOD] = ActionDef.new(
+		ID_CHOP_WOOD, "Chop Wood", 5, true, GridData.TILE_FOREST, 15.0, 0.2
+	)
+
+	_actions[ID_MINE_ROCK] = ActionDef.new(
+		ID_MINE_ROCK, "Mine Rock", 5, true, GridData.TILE_MINE, 20.0, 0.25
+	)
+
+	_actions[ID_WATER_CROP] = ActionDef.new(
+		ID_WATER_CROP, "Water Crop", 3, true, GridData.TILE_FARM, 10.0, 0.1
 	)
 
 
