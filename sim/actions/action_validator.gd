@@ -7,6 +7,7 @@ enum RejectReason {
 	NOT_ALIVE,
 	ALREADY_ACTING,
 	NOT_AT_LOCATION,
+	LOCATION_OCCUPIED,
 	NO_STOCK,
 	LOW_ENERGY,
 	NO_PATH,
@@ -19,6 +20,7 @@ const REJECT_REASON_NAMES: Dictionary = {
 	RejectReason.NOT_ALIVE: "not_alive",
 	RejectReason.ALREADY_ACTING: "already_acting",
 	RejectReason.NOT_AT_LOCATION: "not_at_location",
+	RejectReason.LOCATION_OCCUPIED: "location_occupied",
 	RejectReason.NO_STOCK: "no_stock",
 	RejectReason.LOW_ENERGY: "low_energy",
 	RejectReason.NO_PATH: "no_path",
@@ -53,6 +55,9 @@ static func can_start(
 		var current_tile_type: StringName = world.grid_data.tiles.get(agent.position, &"")
 		if current_tile_type != action_def.required_location:
 			return RejectReason.NOT_AT_LOCATION
+		var obj: WorldObject = world.get_object_at(agent.position)
+		if obj != null and not obj.is_available() and not obj.current_occupants.has(agent.id):
+			return RejectReason.LOCATION_OCCUPIED
 
 	if action_def.id == ActionLibrary.ID_EAT:
 		if world.granary_food <= 0:

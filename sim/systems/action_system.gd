@@ -54,6 +54,10 @@ static func start_action(
 	instance.target_tile = target_tile
 	agent.current_action = instance
 
+	var obj: WorldObject = world.get_object_at(agent.position)
+	if obj != null and action_def.required_location != &"":
+		obj.occupy(agent.id)
+
 	_emit_event(
 		events,
 		world,
@@ -74,6 +78,9 @@ static func update(
 ) -> void:
 	if not agent.alive:
 		if agent.current_action != null:
+			var obj: WorldObject = world.get_object_at(agent.position)
+			if obj != null:
+				obj.release(agent.id)
 			agent.current_action = null
 			agent.path.clear()
 		return
@@ -83,6 +90,9 @@ static func update(
 
 	var continue_reason: ActionValidator.RejectReason = ActionValidator.can_continue(agent, world)
 	if continue_reason != ActionValidator.RejectReason.OK:
+		var obj: WorldObject = world.get_object_at(agent.position)
+		if obj != null:
+			obj.release(agent.id)
 		_emit_event(
 			events,
 			world,
@@ -147,6 +157,10 @@ static func interrupt(
 		}
 	)
 
+	var obj: WorldObject = world.get_object_at(agent.position)
+	if obj != null:
+		obj.release(agent.id)
+
 	agent.current_action = null
 	agent.path.clear()
 	return true
@@ -163,6 +177,9 @@ static func _complete_action(
 				agent.needs[&"hunger"] + SimConst.EAT_HUNGER_RESTORE, 0.0, 100.0
 			)
 		else:
+			var obj_fail: WorldObject = world.get_object_at(agent.position)
+			if obj_fail != null:
+				obj_fail.release(agent.id)
 			_emit_event(
 				events,
 				world,
@@ -178,6 +195,10 @@ static func _complete_action(
 
 	elif def.id == ActionLibrary.ID_WORK_FARM:
 		world.modify_granary_food(SimConst.WORK_FARM_FOOD_PRODUCED, &"work_farm", agent.id, events)
+
+	var obj: WorldObject = world.get_object_at(agent.position)
+	if obj != null:
+		obj.release(agent.id)
 
 	_emit_event(
 		events,
