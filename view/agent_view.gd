@@ -57,13 +57,13 @@ func _update_animation_frame() -> void:
 	if agent.current_action != null:
 		var act_id: StringName = agent.current_action.def.id
 		match act_id:
-			ActionLibrary.ID_MOVE:
+			ActionLibrary.ID_MOVE, ActionLibrary.ID_WANDER:
 				_sprite.frame = (_sprite.frame + 1) % _sprite.hframes
 			ActionLibrary.ID_WORK_FARM:
 				_sprite.frame = (_sprite.frame + 1) % _sprite.hframes
 			ActionLibrary.ID_EAT:
 				_sprite.frame = 0
-			ActionLibrary.ID_SLEEP:
+			ActionLibrary.ID_SLEEP, ActionLibrary.ID_RECOVER:
 				_sprite.frame = 1
 			_:
 				_sprite.frame = 0

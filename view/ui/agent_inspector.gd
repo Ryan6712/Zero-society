@@ -61,9 +61,13 @@ func update_inspector() -> void:
 		_bar_health.value = inspected_agent.health
 
 	if _lbl_personality:
-		var c: int = inspected_agent.personality.get(&"conscientiousness", 50)
-		var r: int = inspected_agent.personality.get(&"risk_tolerance", 50)
-		_lbl_personality.text = "Kepribadian: Rajin=%d, Berani=%d" % [c, r]
+		var ind: int = inspected_agent.personality.get(&"industrious", 50)
+		var cau: int = inspected_agent.personality.get(&"cautious", 50)
+		var adv: int = inspected_agent.personality.get(&"adventurous", 50)
+		var lzy: int = inspected_agent.personality.get(&"lazy", 50)
+		_lbl_personality.text = (
+			"Sifat: Rajin=%d, Hati-hati=%d, Petualang=%d, Santai=%d" % [ind, cau, adv, lzy]
+		)
 
 	_update_trace_list()
 
