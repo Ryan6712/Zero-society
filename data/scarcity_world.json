@@ -1,0 +1,35 @@
+{
+	"seed": 42,
+	"agent_count": 4,
+	"granary_food": 3,
+	"grid": {
+		"width": 16,
+		"height": 12,
+		"tiles": [
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","house","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","granary","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","farm","grass","grass","grass","grass"],
+			["grass","grass","water","water","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","water","water","water","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"],
+			["grass","grass","grass","water","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass","grass"]
+		]
+	},
+	"agent_spawn_positions": [
+		[4, 3],
+		[5, 3],
+		[3, 4],
+		[4, 4]
+	],
+	"agent_personalities": [
+		{"conscientiousness": 90, "risk_tolerance": 20},
+		{"conscientiousness": 70, "risk_tolerance": 40},
+		{"conscientiousness": 40, "risk_tolerance": 60},
+		{"conscientiousness": 10, "risk_tolerance": 90}
+	]
+}

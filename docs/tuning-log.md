@@ -38,3 +38,20 @@ Protokol: ubah satu parameter per percobaan, jalankan sweep 20 seed yang sama, d
 
 ### 4. Kesimpulan
 Parameter awal memberikan ekosistem desa yang stabil: agent bekerja di ladang saat energi tinggi dan tidak lapar, makan di lumbung saat lapar naik, dan pulang tidur saat malam hari/energi rendah. Survival interrupt berhasil mencegah kelaparan tak terduga. Baseline ini dibekukan untuk Sprint 3.
+
+---
+
+## Entri: 2026-11-26 — Eksperimen Kelangkaan / Scarcity (N-04)
+
+### 1. Konfigurasi Eksperimen
+- **Dunia:** `data/scarcity_world.json` (Stok lumbung awal 3 food, 1 tile farm sempit, 4 agent dengan kepribadian kontras)
+- **Agent:** 4 NPC (C=90 R=20, C=70 R=40, C=40 R=60, C=10 R=90)
+- **Durasi:** 720 tick (5 hari simulasi)
+- **Runner:** `godot --headless -s tools/sweep_seeds.gd -- --config res://data/scarcity_world.json --seeds 10 --ticks 720`
+
+### 2. Hasil Sweep
+| Metrik | Nilai | Evaluasi |
+|---|---|---|
+| **Survival Rate** | **100.0%** (40/40 agent) | Agent rajin segera bekerja dan menyelamatkan suplai desa |
+| **Switch Aksi / Hari** | **10.8 / hari** | Lebih fokus bekerja karena dorongan kebutuhan tinggi |
+| **Sisa Lumbung Akhir** | **239 food** | Ekosistem pulih dari krisis awal |
