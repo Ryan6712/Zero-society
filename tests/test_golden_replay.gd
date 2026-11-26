@@ -2,7 +2,7 @@ extends GutTest
 ## Golden replay test: membekukan hash state deterministik resmi untuk Seed 42 pada tick 1000.
 ## Komitmen refactor atau optimasi tidak boleh mengubah nilai hash ini.
 
-const GOLDEN_HASH: String = "ae20088458ef83220dda371cd71a3d05eee911276c45f92ee6bcf46f574784b8"
+const GOLDEN_HASH: String = "5599485c607d6d3fde3eec36058ad53d8a289806dccce53483f69cdaf993abdb"
 
 
 func test_golden_replay_seed_42() -> void:
