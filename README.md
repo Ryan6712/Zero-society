@@ -6,7 +6,7 @@ Society Zero adalah simulator masyarakat buatan: individu virtual (*agent*) hidu
  
 > *Do not script the society. Build the conditions that allow society to emerge.*
  
-**Status:** Rilis `v0.1.0` ("Hidup di Desa") — Seluruh Sprint 0, 1, 2, 3, dan 4 selesai. Simulasi deterministik otonom dengan antarmuka visual interaktif aktif.
+**Status:** Rilis `v0.1.0` & **Phase 0: Living Foundation** selesai (Sprint 0–4 + Phase 0). Simulasi individu mandiri deterministik dengan objek lingkungan, okupansi, dan kepribadian 4 trait aktif.
 
 ---
 
@@ -280,6 +280,7 @@ Catatan teknis mendalam didokumentasikan per sprint:
 - [Devlog Sprint 2: Aksi, Validasi, Gerak](docs/devlog/sprint-2.md) — ActionLibrary, ActionValidator, MovementSystem A*, ActionSystem, 82 tes GUT, konservasi makanan.
 - [Devlog Sprint 3: Utility AI dan Explainability](docs/devlog/sprint-3.md) — UtilityBrain, Curves, anti ping-pong, survival interrupt, sweep 20 seed (100% survival), 96 tes GUT.
 - [Devlog Sprint 4: View, Kontrol, Hardening, Rilis](docs/devlog/sprint-4.md) — WorldView, AgentView tween, TimeControls, HUD, Inspector (decision trace), 100 tes GUT, golden replay, rilis v0.1.0.
+- [Devlog Phase 0: Living Foundation](docs/devlog/phase-0-living-foundation.md) — Objek dunia, kapasitas okupansi, aktivitas wander & recover, 4 trait kepribadian, 117 tes GUT.
 - [Tuning Log](docs/tuning-log.md) — Riwayat tuning dan sweep agregat.
 - [Pedoman Devlog](docs/opinion/devlog-guidelines.md) — Aturan penulisan devlog dan jadwal pembaruan README.
 

@@ -567,25 +567,25 @@ aktivitas identik.
 
 Phase 0 dapat dianggap selesai ketika kriteria berikut terpenuhi:
 
--   [ ] Setiap NPC memiliki identitas dan state individual.
--   [ ] Hunger dan Energy berubah secara dinamis.
--   [ ] Health tersedia sebagai kondisi dasar.
--   [ ] NPC memiliki lebih dari tiga kemungkinan aktivitas.
--   [ ] Setiap aktivitas memiliki persyaratan dan konsekuensi.
--   [ ] Aktivitas mempunyai lifecycle yang jelas.
--   [ ] NPC tidak mengganti aktivitas secara tidak stabil setiap tick.
--   [ ] NPC dapat menggunakan objek lingkungan.
--   [ ] Resource memiliki jumlah dan perubahan state yang valid.
--   [ ] NPC tidak dapat menggunakan resource yang tidak tersedia.
--   [ ] Personality dasar memengaruhi kecenderungan keputusan.
--   [ ] Utility AI mengevaluasi kandidat aktivitas berdasarkan beberapa
+-   [x] Setiap NPC memiliki identitas dan state individual.
+-   [x] Hunger dan Energy berubah secara dinamis.
+-   [x] Health tersedia sebagai kondisi dasar.
+-   [x] NPC memiliki lebih dari tiga kemungkinan aktivitas.
+-   [x] Setiap aktivitas memiliki persyaratan dan konsekuensi.
+-   [x] Aktivitas mempunyai lifecycle yang jelas.
+-   [x] NPC tidak mengganti aktivitas secara tidak stabil setiap tick.
+-   [x] NPC dapat menggunakan objek lingkungan.
+-   [x] Resource memiliki jumlah dan perubahan state yang valid.
+-   [x] NPC tidak dapat menggunakan resource yang tidak tersedia.
+-   [x] Personality dasar memengaruhi kecenderungan keputusan.
+-   [x] Utility AI mengevaluasi kandidat aktivitas berdasarkan beberapa
     faktor.
--   [ ] Aktivitas yang tidak valid dikeluarkan dari kandidat yang dapat
+-   [x] Aktivitas yang tidak valid dikeluarkan dari kandidat yang dapat
     dipilih.
--   [ ] Dunia memiliki waktu simulasi.
--   [ ] Keputusan NPC dapat diperiksa melalui Decision Trace.
--   [ ] Kejadian yang benar-benar terjadi dicatat melalui Event Log.
--   [ ] Simulasi dapat dijalankan ulang dengan seed dan konfigurasi yang
+-   [x] Dunia memiliki waktu simulasi.
+-   [x] Keputusan NPC dapat diperiksa melalui Decision Trace.
+-   [x] Kejadian yang benar-benar terjadi dicatat melalui Event Log.
+-   [x] Simulasi dapat dijalankan ulang dengan seed dan konfigurasi yang
     sama.
 
 ## 17. Prinsip Arsitektur yang Harus Dipertahankan

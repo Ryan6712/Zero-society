@@ -69,24 +69,11 @@ Fokus: Integrasi penuh 5 NPC mandiri, skenario A–E, dan pembekuan golden hash 
 
 ---
 
-## 3. Strategi Implementasi & Dependensi
+## 4. Status Pelaksanaan & Checklist Phase 0
 
-```text
-Milestone 0.1 (Wander & Recover)
-       │
-       ▼
-Milestone 0.2 (Objek Dunia, Kapasitas Bed/Farm/Storage)
-       │
-       ▼
-Milestone 0.3 (Personality 4 Traits & Event-Triggered Re-eval)
-       │
-       ▼
-Milestone 0.4 (Scenario A–E, Polish UI, Rilis Phase 0)
-```
-
-1. **Aturan Keras Tetap Berlaku:**
-   - Tidak ada `extends Node` atau RNG global di `sim/`.
-   - Konservasi makanan tetap diaudit satu jalur.
-   - Setiap fitur baru harus diawali atau diiringi tes GUT unit & sistem.
-2. **Backward Compatibility:**
-   - Tetap menjaga determinisme seed dan tidak merusak kontrak v0.1.0 tanpa versi migrasi yang jelas.
+- [x] **Milestone 0.1:** Aktivitas `wander` & `recover` selesai dan teruji (100% test pass).
+- [x] **Milestone 0.2:** Model `WorldObject`, kapasitas slot (Bed, Farm, Granary), dan okupansi tervalidasi.
+- [x] **Milestone 0.3:** 4 Trait kepribadian (`industrious`, `cautious`, `adventurous`, `lazy`) aktif dan teruji di `UtilityBrain`.
+- [x] **Milestone 0.4:** Skenario A–E diimplementasikan di `tests/scenarios/` dan 100% lulus.
+- [x] UI visual (Inspector & HUD) mencerminkan sifat kepribadian baru dan aksi Phase 0.
+- [x] Seluruh 117 tes GUT unit, sistem, skenario, dan determinisme 100% hijau.
