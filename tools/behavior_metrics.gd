@@ -17,13 +17,14 @@ static func collect_metrics(sim: Simulation) -> Dictionary:
 	var days_simulated: float = maxf(1.0, float(sim.world.tick) / float(SimConst.TICKS_PER_DAY))
 
 	var action_switch_count: int = 0
-	var action_counts: Dictionary = {}
+	var action_ticks: Dictionary = {}
 
 	for event: Dictionary in sim.events:
 		var event_type: String = event.get("event_type", "")
 		if event_type == "action_started":
 			var action_id: String = event.get("action_id", "")
-			action_counts[action_id] = action_counts.get(action_id, 0) + 1
+			var duration: int = event.get("duration_ticks", 1)
+			action_ticks[action_id] = action_ticks.get(action_id, 0) + duration
 			if action_id != "move":
 				action_switch_count += 1
 
@@ -33,18 +34,18 @@ static func collect_metrics(sim: Simulation) -> Dictionary:
 		else 0.0
 	)
 
-	var total_action_starts: int = 0
-	for count: int in action_counts.values():
-		total_action_starts += count
+	var total_time_ticks: int = 0
+	for count: int in action_ticks.values():
+		total_time_ticks += count
 
-	var action_percentages: Dictionary = {}
-	for act_id: String in action_counts:
+	var time_percentages: Dictionary = {}
+	for act_id: String in action_ticks:
 		var pct: float = (
-			(float(action_counts[act_id]) / float(total_action_starts)) * 100.0
-			if total_action_starts > 0
+			(float(action_ticks[act_id]) / float(total_time_ticks)) * 100.0
+			if total_time_ticks > 0
 			else 0.0
 		)
-		action_percentages[act_id] = snappedf(pct, 0.1)
+		time_percentages[act_id] = snappedf(pct, 0.1)
 
 	return {
 		"total_agents": total_agents,
@@ -52,6 +53,6 @@ static func collect_metrics(sim: Simulation) -> Dictionary:
 		"survival_rate": snappedf(survival_rate, 0.1),
 		"days_simulated": snappedf(days_simulated, 0.1),
 		"switches_per_day": snappedf(switches_per_agent_per_day, 0.1),
-		"action_percentages": action_percentages,
+		"action_time_percentages": time_percentages,
 		"final_granary_food": sim.world.granary_food,
 	}
