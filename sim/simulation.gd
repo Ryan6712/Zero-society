@@ -23,6 +23,7 @@ func _init(config: Dictionary) -> void:
 	var grid_dict: Dictionary = config.get("grid", {})
 	if grid_dict.size() > 0:
 		world.grid_data = GridData.from_dict(grid_dict)
+		_register_default_world_objects()
 
 	var spawn_positions: Array = config.get("agent_spawn_positions", [])
 	var personalities: Array = config.get("agent_personalities", [])
@@ -42,6 +43,29 @@ func _init(config: Dictionary) -> void:
 			agent.personality[&"conscientiousness"] = c
 			agent.personality[&"risk_tolerance"] = r
 		world.agents.append(agent)
+
+
+func _register_default_world_objects() -> void:
+	if world.grid_data == null:
+		return
+	for pos: Vector2i in world.grid_data.tiles:
+		var tile_type: StringName = world.grid_data.tiles[pos]
+		match tile_type:
+			GridData.TILE_HOUSE:
+				var obj: WorldObject = WorldObject.new(
+					StringName("bed_%d_%d" % [pos.x, pos.y]), GridData.TILE_HOUSE, pos, 1
+				)
+				world.register_world_object(obj)
+			GridData.TILE_FARM:
+				var obj: WorldObject = WorldObject.new(
+					StringName("farm_%d_%d" % [pos.x, pos.y]), GridData.TILE_FARM, pos, 2
+				)
+				world.register_world_object(obj)
+			GridData.TILE_GRANARY:
+				var obj: WorldObject = WorldObject.new(
+					StringName("granary_%d_%d" % [pos.x, pos.y]), GridData.TILE_GRANARY, pos, 99
+				)
+				world.register_world_object(obj)
 
 
 func step() -> void:
