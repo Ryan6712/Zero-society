@@ -114,3 +114,16 @@ func test_survival_interrupt_triggers_on_low_hunger() -> void:
 
 	assert_true(interrupted)
 	assert_null(_agent.current_action)
+
+
+func test_survival_interrupt_spares_move_with_eat_intent() -> void:
+	var move_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_MOVE)
+	ActionSystem.start_action(
+		_agent, move_def, _world, Vector2i(3, 1), _events, ActionLibrary.ID_EAT
+	)
+
+	_agent.needs[&"hunger"] = 10.0
+	var interrupted: bool = UtilityBrain.check_survival_interrupt(_agent, _world, _events)
+
+	assert_false(interrupted, "Move dengan intent eat tidak boleh di-interrupt saat hunger kritis")
+	assert_not_null(_agent.current_action)

@@ -29,6 +29,8 @@ static func choose(agent: AgentState, world: WorldState, rng: RandomNumberGenera
 		if agent.current_action != null and agent.current_action.def.id == action_id:
 			final_score += COMMIT_BONUS
 
+		final_score = snappedf(final_score, 0.0001)
+
 		(
 			scored
 			. append(
@@ -70,6 +72,13 @@ static func check_survival_interrupt(
 
 	var current_id: StringName = agent.current_action.def.id
 	if current_id in [ActionLibrary.ID_EAT, ActionLibrary.ID_SLEEP]:
+		return false
+
+	# Jangan batalkan gerak (move) yang tujuannya untuk makan atau tidur
+	if (
+		current_id == ActionLibrary.ID_MOVE
+		and agent.current_action.intent in [ActionLibrary.ID_EAT, ActionLibrary.ID_SLEEP]
+	):
 		return false
 
 	var hunger: float = agent.needs.get(&"hunger", 100.0)
@@ -115,14 +124,14 @@ static func decide_and_act(
 	if req_location != &"" and current_tile_type != req_location:
 		var move_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_MOVE)
 		var reason: ActionValidator.RejectReason = ActionSystem.start_action(
-			agent, move_def, world, target_tile, events
+			agent, move_def, world, target_tile, events, best_id
 		)
 		if reason != ActionValidator.RejectReason.OK:
 			var idle_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_IDLE)
 			ActionSystem.start_action(agent, idle_def, world, agent.position, events)
 	else:
 		var reason: ActionValidator.RejectReason = ActionSystem.start_action(
-			agent, intended_def, world, target_tile, events
+			agent, intended_def, world, target_tile, events, best_id
 		)
 		if reason != ActionValidator.RejectReason.OK:
 			var idle_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_IDLE)
@@ -203,7 +212,7 @@ static func _score_action(
 
 
 static func _compare_scored(a: Dictionary, b: Dictionary) -> bool:
-	if not is_equal_approx(a["score"], b["score"]):
+	if a["score"] != b["score"]:
 		return a["score"] > b["score"]
 	return String(a["id"]) < String(b["id"])
 
