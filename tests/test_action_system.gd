@@ -154,3 +154,25 @@ func test_cannot_interrupt_uninterruptible_action() -> void:
 	var interrupted: bool = ActionSystem.interrupt(_agent, _world, &"survival", _events)
 	assert_false(interrupted)
 	assert_not_null(_agent.current_action)
+
+
+func test_recover_restores_health_at_house() -> void:
+	_agent.position = Vector2i(1, 1)  # On house
+	_agent.health = 80.0
+	var recover_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_RECOVER)
+	ActionSystem.start_action(_agent, recover_def, _world, Vector2i.ZERO, _events)
+
+	ActionSystem.update(_agent, _world, _rng, _events)
+	assert_gt(_agent.health, 80.0, "Health harus pulih saat aksi recover")
+
+
+func test_wander_moves_agent_to_target_tile() -> void:
+	_agent.position = Vector2i(0, 0)
+	var wander_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_WANDER)
+	var reason: ActionValidator.RejectReason = ActionSystem.start_action(
+		_agent, wander_def, _world, Vector2i(1, 0), _events
+	)
+	assert_eq(reason, ActionValidator.RejectReason.OK)
+
+	ActionSystem.update(_agent, _world, _rng, _events)
+	assert_eq(_agent.position, Vector2i(1, 0), "Agent harus berpindah ke target tile saat wander")

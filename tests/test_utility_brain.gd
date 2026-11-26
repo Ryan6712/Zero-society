@@ -127,3 +127,12 @@ func test_survival_interrupt_spares_move_with_eat_intent() -> void:
 
 	assert_false(interrupted, "Move dengan intent eat tidak boleh di-interrupt saat hunger kritis")
 	assert_not_null(_agent.current_action)
+
+
+func test_low_health_prefers_recover() -> void:
+	_agent.health = 20.0
+	_agent.needs[&"hunger"] = 90.0
+	_agent.needs[&"energy"] = 90.0
+
+	var decision: Dictionary = UtilityBrain.choose(_agent, _world, _rng)
+	assert_eq(decision["best_id"], ActionLibrary.ID_RECOVER)
