@@ -1,19 +1,34 @@
 extends Node2D
-## Visualisasi peta grid dan kumpulan AgentView.
-## Membaca GridData dan WorldState tanpa menulis state.
+## Visualisasi peta grid dan kumpulan AgentView menggunakan aset Sunnyside World.
+## Hanya membaca GridData dan WorldState tanpa menulis state (ADR-002).
 
 signal agent_selected(agent: AgentState)
 
 const TILE_SIZE: int = 16
 
-const COLOR_GRASS: Color = Color(0.40, 0.70, 0.30)
-const COLOR_FARM: Color = Color(0.55, 0.38, 0.22)
-const COLOR_HOUSE: Color = Color(0.72, 0.45, 0.30)
-const COLOR_GRANARY: Color = Color(0.85, 0.70, 0.35)
-const COLOR_WATER: Color = Color(0.25, 0.55, 0.85)
-const COLOR_FOREST: Color = Color(0.18, 0.45, 0.22)
-const COLOR_MINE: Color = Color(0.50, 0.50, 0.55)
-const COLOR_DEFAULT: Color = Color(0.30, 0.30, 0.30)
+const TEX_TILESET: Texture2D = preload(
+	"res://assets/sunnyside_world/Tileset/spr_tileset_sunnysideworld_16px.png"
+)
+const TEX_TREE: Texture2D = preload(
+	"res://assets/sunnyside_world/Elements/Plants/spr_deco_tree_01_strip4.png"
+)
+const TEX_ROCK: Texture2D = preload(
+	"res://assets/sunnyside_world/Elements/Crops/rock.png"
+)
+const TEX_CRATE: Texture2D = preload(
+	"res://assets/sunnyside_world/Elements/Crops/crate_base.png"
+)
+const TEX_WHEAT: Texture2D = preload(
+	"res://assets/sunnyside_world/Elements/Crops/wheat_03.png"
+)
+
+const REGION_GRASS: Rect2 = Rect2(32, 32, 16, 16)
+const REGION_WATER: Rect2 = Rect2(64, 16, 16, 16)
+const REGION_FARM: Rect2 = Rect2(96, 64, 16, 16)
+const REGION_HOUSE: Rect2 = Rect2(32, 144, 16, 16)
+const REGION_GRANARY: Rect2 = Rect2(160, 144, 16, 16)
+const REGION_ROOF: Rect2 = Rect2(176, 144, 16, 16)
+const REGION_TREE_FRAME: Rect2 = Rect2(0, 0, 32, 34)
 
 const AGENT_COLORS: Array[Color] = [
 	Color(0.3, 0.7, 1.0),
@@ -72,25 +87,59 @@ func _draw() -> void:
 	if grid_data == null:
 		return
 
+	# Layer 1: Ubin dasar permukaan (tanah, air, ladang, lantai rumah, lumbung)
 	for y: int in range(grid_data.height):
 		for x: int in range(grid_data.width):
 			var pos: Vector2i = Vector2i(x, y)
 			var tile_type: StringName = grid_data.tiles.get(pos, &"")
-			var tile_color: Color = _color_for_tile(tile_type)
-
 			var rect: Rect2 = Rect2(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
-			draw_rect(rect, tile_color, true)
-			draw_rect(rect, Color(0, 0, 0, 0.15), false, 1.0)
+			var src_region: Rect2 = _region_for_ground(tile_type)
+			draw_texture_rect_region(TEX_TILESET, rect, src_region)
+
+	# Layer 2: Props & Dekorasi visual (Pohon, Batu, Tanaman Gandum, Kotak Lumbung, Atap Rumah)
+	for y: int in range(grid_data.height):
+		for x: int in range(grid_data.width):
+			var pos: Vector2i = Vector2i(x, y)
+			var tile_type: StringName = grid_data.tiles.get(pos, &"")
+			_draw_tile_props(pos, tile_type)
 
 
-func _color_for_tile(tile_type: StringName) -> Color:
-	var color_map: Dictionary = {
-		GridData.TILE_GRASS: COLOR_GRASS,
-		GridData.TILE_FARM: COLOR_FARM,
-		GridData.TILE_HOUSE: COLOR_HOUSE,
-		GridData.TILE_GRANARY: COLOR_GRANARY,
-		GridData.TILE_WATER: COLOR_WATER,
-		GridData.TILE_FOREST: COLOR_FOREST,
-		GridData.TILE_MINE: COLOR_MINE,
-	}
-	return color_map.get(tile_type, COLOR_DEFAULT)
+func _draw_tile_props(pos: Vector2i, tile_type: StringName) -> void:
+	var px: float = float(pos.x * TILE_SIZE)
+	var py: float = float(pos.y * TILE_SIZE)
+
+	match tile_type:
+		GridData.TILE_FOREST:
+			# Gambar pohon oak 32x34px Sunnyside World berdiri di atas tile
+			var tree_rect: Rect2 = Rect2(px - 8.0, py - 18.0, 32.0, 34.0)
+			draw_texture_rect_region(TEX_TREE, tree_rect, REGION_TREE_FRAME)
+		GridData.TILE_MINE:
+			# Gambar batu tambang 10x10px di tengah tile
+			var rock_rect: Rect2 = Rect2(px + 3.0, py + 3.0, 10.0, 10.0)
+			draw_texture_rect(TEX_ROCK, rock_rect, false)
+		GridData.TILE_FARM:
+			# Gambar tanaman gandum yang tumbuh di ladang
+			var wheat_rect: Rect2 = Rect2(px + 1.5, py + 1.0, 13.0, 14.0)
+			draw_texture_rect(TEX_WHEAT, wheat_rect, false)
+		GridData.TILE_GRANARY:
+			# Gambar peti lumbung kayu
+			var crate_rect: Rect2 = Rect2(px, py, float(TILE_SIZE), float(TILE_SIZE))
+			draw_texture_rect(TEX_CRATE, crate_rect, false)
+		GridData.TILE_HOUSE:
+			# Gambar aksen atap/struktur rumah
+			var house_rect: Rect2 = Rect2(px, py, float(TILE_SIZE), float(TILE_SIZE))
+			draw_texture_rect_region(TEX_TILESET, house_rect, REGION_ROOF)
+
+
+func _region_for_ground(tile_type: StringName) -> Rect2:
+	match tile_type:
+		GridData.TILE_WATER:
+			return REGION_WATER
+		GridData.TILE_FARM:
+			return REGION_FARM
+		GridData.TILE_HOUSE:
+			return REGION_HOUSE
+		GridData.TILE_GRANARY:
+			return REGION_GRANARY
+		_:
+			return REGION_GRASS
