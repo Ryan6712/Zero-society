@@ -20,3 +20,4 @@ func _process(delta: float) -> void:
 		n += 1
 		simulation.step()
 		ticked.emit(simulation.world.tick)
+	_accum = minf(_accum, SimConst.SECONDS_PER_TICK * float(SimConst.MAX_TICKS_PER_FRAME))

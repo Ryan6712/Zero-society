@@ -15,6 +15,10 @@ var simulation: Simulation = null
 
 func _ready() -> void:
 	_init_simulation()
+	if simulation == null:
+		push_error("GameScene: Simulasi gagal diinisialisasi!")
+		return
+
 	if _world_view:
 		_world_view.setup(simulation.world)
 		_world_view.agent_selected.connect(_on_agent_selected)
