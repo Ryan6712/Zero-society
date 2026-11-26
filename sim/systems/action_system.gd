@@ -8,7 +8,8 @@ static func start_action(
 	action_def: ActionDef,
 	world: WorldState,
 	target_tile: Vector2i = Vector2i.ZERO,
-	events: Array[Dictionary] = []
+	events: Array[Dictionary] = [],
+	intent: StringName = &""
 ) -> ActionValidator.RejectReason:
 	var reason: ActionValidator.RejectReason = ActionValidator.can_start(
 		agent, action_def, world, target_tile
@@ -48,7 +49,7 @@ static func start_action(
 		agent.path = path
 		duration = path.size()
 
-	var instance: ActionInstance = ActionInstance.new(action_def, world.tick)
+	var instance: ActionInstance = ActionInstance.new(action_def, world.tick, intent)
 	instance.ticks_left = duration
 	instance.target_tile = target_tile
 	agent.current_action = instance
@@ -152,10 +153,23 @@ static func _complete_action(
 	var def: ActionDef = instance.def
 
 	if def.id == ActionLibrary.ID_EAT:
-		agent.needs[&"hunger"] = clampf(
-			agent.needs[&"hunger"] + SimConst.EAT_HUNGER_RESTORE, 0.0, 100.0
-		)
-		world.modify_granary_food(-1, &"eat", agent.id, events)
+		if world.modify_granary_food(-1, &"eat", agent.id, events):
+			agent.needs[&"hunger"] = clampf(
+				agent.needs[&"hunger"] + SimConst.EAT_HUNGER_RESTORE, 0.0, 100.0
+			)
+		else:
+			_emit_event(
+				events,
+				world,
+				agent,
+				EventSchema.EventType.ACTION_FAILED,
+				{
+					"action_id": "eat",
+					"reject_reason": "no_stock",
+				}
+			)
+			agent.current_action = null
+			return
 
 	elif def.id == ActionLibrary.ID_WORK_FARM:
 		world.modify_granary_food(SimConst.WORK_FARM_FOOD_PRODUCED, &"work_farm", agent.id, events)

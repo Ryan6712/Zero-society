@@ -79,6 +79,28 @@ func test_eat_action_effects_and_granary_audit() -> void:
 	assert_true(_world.is_food_conserved())
 
 
+func test_eat_fails_if_stock_emptied_during_eating() -> void:
+	_agent.position = Vector2i(3, 1)  # On granary
+	_agent.needs[&"hunger"] = 30.0
+	_world.granary_food = 1
+
+	var eat_def: ActionDef = ActionLibrary.get_action(ActionLibrary.ID_EAT)
+	ActionSystem.start_action(_agent, eat_def, _world, Vector2i.ZERO, _events)
+
+	# Simulasikan stok dicuri / diambil agent lain di tick 1
+	_world.granary_food = 0
+	_world.total_food_consumed += 1
+
+	# Selesaikan aksi eat di tick 2
+	ActionSystem.update(_agent, _world, _rng, _events)
+	ActionSystem.update(_agent, _world, _rng, _events)
+
+	assert_null(_agent.current_action)
+	assert_eq(
+		_agent.needs[&"hunger"], 30.0, "Hunger tidak boleh bertambah jika stok habis saat selesai"
+	)
+
+
 func test_work_farm_action_produces_food() -> void:
 	_agent.position = Vector2i(2, 0)  # On farm
 	_agent.needs[&"energy"] = 80.0
