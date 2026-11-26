@@ -220,7 +220,7 @@ static func _score_action(
 				industrious = agent.personality[&"conscientiousness"]
 			var lazy: int = agent.personality.get(&"lazy", 50)
 			var kerja_drive: float = maxf(
-				0.05, (0.25 + 0.55 * (float(industrious) / 100.0)) - (0.15 * (float(lazy) / 100.0))
+				0.02, (0.1 + 0.6 * (float(industrious) / 100.0)) - (0.2 * (float(lazy) / 100.0))
 			)
 			var max_need: float = maxf(
 				Curves.urgency(agent.needs.get(&"hunger", 100.0)),

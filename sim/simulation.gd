@@ -38,10 +38,8 @@ func _init(config: Dictionary) -> void:
 		agent.home_tile = agent.position
 		if i < personalities.size():
 			var p: Dictionary = personalities[i]
-			var c: int = clampi(p.get("conscientiousness", 50), 0, 100)
-			var r: int = clampi(p.get("risk_tolerance", 50), 0, 100)
-			agent.personality[&"conscientiousness"] = c
-			agent.personality[&"risk_tolerance"] = r
+			for key: String in p:
+				agent.set_trait(StringName(key), int(p[key]))
 		world.agents.append(agent)
 
 
